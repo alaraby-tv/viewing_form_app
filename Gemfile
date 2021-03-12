@@ -17,6 +17,10 @@ gem 'autoprefixer-rails'
 gem 'bootstrap', '~> 4.0.0'
 gem 'jquery-rails'
 
+gem 'devise'
+gem 'devise_invitable', '~> 2.0.0'
+gem 'devise-bootstrap-views', '~> 1.0'
+
 gem 'bootsnap', '>= 1.1.0', require: false
 
 group :development, :test do
