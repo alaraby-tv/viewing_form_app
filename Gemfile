@@ -16,6 +16,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'autoprefixer-rails'
 gem 'bootstrap', '~> 4.0.0'
 gem 'jquery-rails'
+gem 'alertify-rails'
 
 gem 'devise'
 gem 'devise_invitable', '~> 2.0.0'
