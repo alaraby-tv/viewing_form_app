@@ -12,6 +12,10 @@
   </head>
 
   <body id="ProjBody">
-    <%= yield %>
+    <%= render  'partials/header' %>
+    <div id="MainContent"> 
+      <%= yield %>
+    </div>
+    <%= render 'partials/footer' %>
   </body>
 </html>
