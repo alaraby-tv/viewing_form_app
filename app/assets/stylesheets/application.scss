@@ -77,6 +77,15 @@ select {
   transform: translateY(4px);
 }
 
+a {
+  color: #fff;
+}
+
+a:hover {
+  color: #eee;
+  text-decoration: none;
+}
+
 #Header {
   background-color: #08375d;
   width: 100%;
@@ -104,7 +113,8 @@ select {
 #MainContent {
   width: 100%;
   margin: auto;
-  /* margin-top: 0px; */
+  margin-top: 0px;
+  padding: 25px 0;
   background: #1270bb;
   display: inline-block;
   color: white;
@@ -182,13 +192,13 @@ select {
 }
 
 #BtnsDiv {
-  display: none;
+  /*display: none;*/
   margin: auto;
   width: 70%;
 }
 
 .row {
-  display: flex;
+  /*display: flex;*/
   width: 95%;
   margin: auto;
 }
@@ -221,7 +231,7 @@ select {
 }
 
 .row-in label {
-  background: #1880d6;
+  /*background: #1880d6;*/
   font-family: verdana;
   font-size: 14px;
   font-weight: bold;
@@ -298,6 +308,7 @@ select {
 
 #Footer h5 {
   margin-left: 25px;
+  margin-top: 25px;
   font-family: verdana;
   font-size: 12px;
   line-height: 0px;
@@ -307,7 +318,7 @@ select {
   margin-left: 25px;
   font-family: verdana;
   font-size: 11px;
-  margin-top: -13px;
+  margin-top: 13px;
 }
 
 @media print {

@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @viewing_form.user %>
+</p>
+
+<p>
+  <strong>Program title:</strong>
+  <%= @viewing_form.program_title %>
+</p>
+
+<p>
+  <strong>Ingest date:</strong>
+  <%= @viewing_form.ingest_date %>
+</p>
+
+<p>
+  <strong>Aspect ratio:</strong>
+  <%= @viewing_form.aspect_ratio %>
+</p>
+
+<p>
+  <strong>Program:</strong>
+  <%= @viewing_form.program_id %>
+</p>
+
+<p>
+  <strong>Tx date:</strong>
+  <%= @viewing_form.tx_date %>
+</p>
+
+<p>
+  <strong>Number of parts:</strong>
+  <%= @viewing_form.number_of_parts %>
+</p>
+
+<%= link_to 'Edit', edit_viewing_form_path(@viewing_form) %> |
+<%= link_to 'Back', viewing_forms_path %>

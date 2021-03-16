@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_12_121452) do
+ActiveRecord::Schema.define(version: 2021_03_15_173547) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,4 +43,19 @@ ActiveRecord::Schema.define(version: 2021_03_12_121452) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "viewing_forms", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "program_title"
+    t.datetime "ingest_date"
+    t.string "aspect_ratio"
+    t.string "program_id"
+    t.datetime "tx_date"
+    t.integer "number_of_parts"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["program_title"], name: "index_viewing_forms_on_program_title"
+    t.index ["user_id"], name: "index_viewing_forms_on_user_id"
+  end
+
+  add_foreign_key "viewing_forms", "users"
 end

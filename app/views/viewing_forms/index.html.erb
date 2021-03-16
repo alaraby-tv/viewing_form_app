@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Viewing Forms</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Program title</th>
+      <th>Ingest date</th>
+      <th>Aspect ratio</th>
+      <th>Program</th>
+      <th>Tx date</th>
+      <th>Number of parts</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @viewing_forms.each do |viewing_form| %>
+      <tr>
+        <td><%= viewing_form.user %></td>
+        <td><%= viewing_form.program_title %></td>
+        <td><%= viewing_form.ingest_date %></td>
+        <td><%= viewing_form.aspect_ratio %></td>
+        <td><%= viewing_form.program_id %></td>
+        <td><%= viewing_form.tx_date %></td>
+        <td><%= viewing_form.number_of_parts %></td>
+        <td><%= link_to 'Show', viewing_form %></td>
+        <td><%= link_to 'Edit', edit_viewing_form_path(viewing_form) %></td>
+        <td><%= link_to 'Destroy', viewing_form, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Viewing Form', new_viewing_form_path %>

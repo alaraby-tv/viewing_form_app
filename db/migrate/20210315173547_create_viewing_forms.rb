@@ -11,5 +11,7 @@ class CreateViewingForms < ActiveRecord::Migration[5.2]
 
       t.timestamps
     end
+
+    add_index :viewing_forms, :program_title
   end
 end

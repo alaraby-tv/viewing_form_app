@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :viewing_forms
   root 'home#index'
   get '/index' => 'home#index'
   devise_for :users
