@@ -21,7 +21,7 @@ class ViewingFormsController < ApplicationController
 
   # POST /viewing_forms or /viewing_forms.json
   def create
-    @viewing_form = ViewingForm.new(viewing_form_params)
+    @viewing_form = current_user.viewing_forms.build(viewing_form_params)
 
     respond_to do |format|
       if @viewing_form.save
@@ -64,6 +64,6 @@ class ViewingFormsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def viewing_form_params
-      params.require(:viewing_form).permit(:user_id, :program_title, :ingest_date, :aspect_ratio, :program_id, :tx_date, :number_of_parts)
+      params.require(:viewing_form).permit(:program_title, :ingest_date, :aspect_ratio, :program_id, :tx_date, :number_of_parts)
     end
 end
