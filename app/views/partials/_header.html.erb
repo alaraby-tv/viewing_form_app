@@ -2,4 +2,7 @@
   <%= image_tag "logo.png", alt: "alaraby_logo", id: "atn_logo" %>
   <!-- <img id="atn_logo" src="images\logo.png" /> -->
   <h2 style="font-family: arial; color:white; text-align:center">Alaraby Viewing Form Application</h2>
+  <% if current_user %>
+    <p><%= link_to "Log Out", destroy_user_session_path, method: :delete %></p>
+  <% end %>
 </div>
