@@ -15,6 +15,7 @@ gem 'jbuilder', '~> 2.5'
 
 gem 'autoprefixer-rails'
 gem 'bootstrap', '~> 4.0.0'
+gem 'bootstrap-datepicker-rails'
 gem 'jquery-rails'
 gem 'alertify-rails'
 
