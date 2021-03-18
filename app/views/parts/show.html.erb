@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>In:</strong>
+  <%= @part.in %>
+</p>
+
+<p>
+  <strong>Out:</strong>
+  <%= @part.out %>
+</p>
+
+<p>
+  <strong>Duration:</strong>
+  <%= @part.duration %>
+</p>
+
+<p>
+  <strong>Notes:</strong>
+  <%= @part.notes %>
+</p>
+
+<p>
+  <strong>Viewing form:</strong>
+  <%= @part.viewing_form %>
+</p>
+
+<%= link_to 'Edit', edit_part_path(@part) %> |
+<%= link_to 'Back', parts_path %>

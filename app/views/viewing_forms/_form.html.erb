@@ -1,3 +1,14 @@
+<div id="ChooseProg_Div">
+  <div class="row">
+    <div class="col">
+      <h3 id="Program_Field_Title"> Choose a Program:</h3>
+    </div>
+    <div class="col">
+      <select name="sources" class="custom-select sources" placeholder="Select a Programme" id="ProgramTitleOption">
+    </select>
+    </div>
+  </div>
+</div>
 <%= form_with(model: viewing_form, local: true) do |form| %>
   <% if viewing_form.errors.any? %>
     <div id="error_explanation">
@@ -11,145 +22,67 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :user_id %>
-    <%= form.text_field :user_id %>
-  </div>
-
-  <div class="field">
-    <%= form.label :program_title %>
-    <%= form.text_field :program_title %>
-  </div>
-
-  <div class="field">
-    <%= form.label :ingest_date %>
-    <%= form.datetime_select :ingest_date %>
-  </div>
-
-  <div class="field">
-    <%= form.label :aspect_ratio %>
-    <%= form.text_field :aspect_ratio %>
-  </div>
-
-  <div class="field">
-    <%= form.label :program_id %>
-    <%= form.text_field :program_id %>
-  </div>
-
-  <div class="field">
-    <%= form.label :tx_date %>
-    <%= form.datetime_select :tx_date %>
-  </div>
-
-  <div class="field">
-    <%= form.label :number_of_parts %>
-    <%= form.number_field :number_of_parts %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
-
-<div id="ChooseProg_Div">
-
-    <div class="row">
-      <div class="column">
-        <h3 id="Program_Field_Title"> Choose a Program:</h3>
-      </div>
-      <div class="column">
-        <select name="sources" class="custom-select sources" placeholder="Select a Programme" id="ProgramTitleOption">
-      </select>
-      </div>
-    </div>
-
-    <!--  <input id="AmountField" type="text" pattern="^(£?\d+(?:\.?\d+)?)(p)?$" title="Input must match one of the following: 432, 213p, £16.23p, £14, £54.04, £23.33333, or 001.41p" /> -->
-    <div id="errorMsgDiv">
-      <h2 id="errorMsg"><p>Error: Check the inputs of th efollowing fields: <br /></p></h2>
-    </div>
-
-    <!-- <button id="GoBtn" class="button">Go!</button> -->
-  </div>
-
   <div id="ViewingForm">
     <div id="ViewingFormTitle">
-      <!-- <img id="Prog_logo" src="Images/Alaraby_Alyoum_Bug.png" /> -->
-
-      <h3>ALARABY ALYOUM Viewing Form</h3>
+      <%= image_tag "Alaraby_Alyoum_Bug.png", alt: "program_logo", id: "Prog_logo" %>
+      <h5>ALARABY ALYOUM Viewing Form</h5>
     </div>
 
     <div class="row">
-      <div class="column">
+      <div class="col">
         <div class="row-in">
-          <label class="col-30">Name</label>
-          <input type="text" class="col-70" placeholder="Enter your name" id="senderName">
+          <%= label_tag 'name', nil, class: 'col-30' %>
+          <%= text_field_tag 'senderName', current_user.full_name, disabled: true, class: "col-70" %>
         </div>
         <div class="row-in">
-          <label class="col-30">Email address</label>
-          <input type="email" class="col-70" placeholder="Enter email" id="senderEmail">
+          <%= label_tag 'email', nil, class: 'col-30' %>
+          <%= text_field_tag 'senderEmail', current_user.email, disabled: true, class: "col-70" %>
         </div>
         <div class="row-in">
-          <label class="col-30">Programme Title</label>
-          <input type="text" class="col-70" placeholder="Programme Title" id="ProgTitle" disabled="disabled" value="ALARABY ALYOUM">
+          <%= form.label :contact_number, 'Contact No', class: 'col-30' %>
+          <%= form.number_field :contact_number, placeholder: "Enter your mobile", id: "ContactNo", class: "col-70" %>
         </div>
         <div class="row-in">
-          <label class="col-30">Ingest Date</label>
-          <input type="date" class="col-70" id="IngestDate">
+          <%= form.label :ingest_date, class: 'col-30' %>
+          <%= form.date_field :ingest_date, id: "IngestDate", class: "col-70" %>
         </div>
         <div class="row-in">
-          <label class="col-30">Aspect Ratio</label>
-          <select class="col-70" id="AspectRatio">
-            <option value="16x9">16:9</option>
-            <option value="4x3">4:3</option>
-          </select>
+          <%= form.label :aspect_ratio, class: 'col-30' %>
+          <%= form.select :aspect_ratio, options_for_select(['16:9', '4:3']), {}, id: "AspectRatio", class: "col-70" %>
         </div>
-
-
       </div>
-      <div class="column">
+      <div class="col">
         <div class="row-in">
-          <label class="col-30">Date</label>
-          <input type="date" class="col-70" placeholder="Date" id="TodayDate">
+          <%= label_tag :date, nil, class: 'col-30' %>
+          <%= text_field_tag :date, Date.today.strftime("%d/%m/%Y") , placeholder: "Date", disabled: true, id: "TodayDate", class: "col-70" %>
         </div>
         <div class="row-in">
-          <label class="col-30">Contact No</label>
-          <input type="number" class="col-70" placeholder="Enter your mobile" id="ContactNo">
+          <%= form.label :program_title, class: 'col-30' %>
+          <%= form.text_field :program_title, value: "ALARABY ALYOUM", placeholder: "Programme Title", disabled: true, id: "ProgTitle", class: "col-70" %>
         </div>
         <div class="row-in">
-          <label class="col-30">Programme ID</label>
-          <input type="text" class="col-70" placeholder="Enter Programme ID" id="ProgID">
+          <%= form.label :program_id, 'Program ID', class: 'col-30' %>
+          <%= form.text_field :program_title, placeholder: "Enter Program ID", id: "ProgID", class: "col-70" %>
         </div>
         <div class="row-in">
-          <label class="col-30">TX Date</label>
-          <input type="date" class="col-70" placeholder="TX Date" id="TXDate">
+          <%= form.label :tx_date, 'TX Date', class: 'col-30' %>
+          <%= form.date_field :tx_date, placeholder: "TX Date", id: "TXDate", class: "col-70" %>
+          
         </div>
         <div class="row-in">
-          <label class="col-30">Number of Parts</label>
-          <select class="col-70" id="NoOfParts">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-          </select>
+          <%= form.label :number_of_parts, 'No of parts', class: 'col-30' %>
+          <%= form.select :number_of_parts, options_for_select([1, 2, 3, 4, 5, 6, 7, 8]), {}, id: "NoOfParts", class: "col-70" %>
         </div>
       </div>
     </div>
 
-    <!--
-    Parts Info
-    -->
+    <!-- Parts Info -->
     <div class="Titled-row" id="Row1">
       <div id="RowTitle">
         <h3>Part: 1</h3>
       </div>
       <div class="row">
-
-        <div class="column">
-
+        <div class="col">
           <div class="row-in">
             <label class="col-30">IN</label>
             <input type="text" class="col-70 calc" placeholder="HH:MM:SS:FF" value="00:00:00:00" id="Row1IN" pattern="([0-9][0-9]):([0-5][0-9]):([0-5][0-9]):([0-2][0-4])">
@@ -162,29 +95,29 @@
             <label class="col-30">DUR</label>
             <input type="text" class="col-70" placeholder="HH:MM:SS:FF" id="Row1DUR" disabled="disabled" pattern="([0-9][0-9]):([0-5][0-9]):([0-5][0-9]):([0-2][0-4])">
           </div>
-
         </div>
-        <div class="column">
+        <div class="col">
           <div class="comments-row">
-            <label>Notes</label>
+            <label class="col-3">Notes</label>
             <textarea rows="4" cols="50" id="Row1Notes"></textarea>
           </div>
         </div>
       </div>
     </div>
-
   </div>
   <div id="editor"></div>
   <div id="BtnsDiv">
     <div class="row">
-      <div class="column">
+      <div class="col">
         <button id="sendForm" class="button">Send Form</button>
       </div>
       <!-- <div class="column">
         <button id="SavePDFBtn" class="button">Save PDF</button>
       </div> -->
-      <div class="column">
+      <div class="col">
         <button id="PrintFormBtn" class="button">Print Form</button>
       </div>
     </div>
   </div>
+<% end %>
+

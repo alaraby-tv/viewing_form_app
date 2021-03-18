@@ -17,6 +17,7 @@
 //= require alertify
 //= require jquery3
 //= require popper
+//= require bootstrap-datepicker
 //= require bootstrap-sprockets
 
 var framerate = 25;
@@ -42,43 +43,47 @@ var PartsHtml = "";
 
 
 var ProgLogosList = new Array();
-ProgLogosList['Alaraby Alyoum'] = ['Images/Alaraby_Alyoum_Bug.png', 'https://drive.google.com/uc?id=1qfL8SdBC_2Bu7_8kmp55rqLYXN8btNGj&export=download'];
-ProgLogosList['Alaraby Al Ryadhi'] = ['Images/Alaraby_Alriadi_Bug.png', 'https://drive.google.com/uc?id=1QdhEyuXIFaH_3PGKLpu_yxDQRn2eyl2w&export=download'];
-ProgLogosList['Aljar Alghareen'] = ['Images/Aljar_Alghareen_L3rd_Bug.png', 'https://drive.google.com/uc?id=1ys5BFm1GLKp0xidqAY4Teal24wAoND8Q&export=download'];
-ProgLogosList['Alkashaf'] = ['Images/Alkashaf_L3rd_Bug.png', 'https://drive.google.com/uc?id=1oGzBI0wRfuqNIKNqGwQibXqMGIbiRdUm&export=download'];
-ProgLogosList['Almagharby'] = ['Images/Almagharby L3rd_Bug.png', 'https://drive.google.com/uc?id=1WWDQMaGtP2HqrRg3OE9WvVClcG1zAgsL&export=download'];
-ProgLogosList['Almawhooboon Fel Ard'] = ['Images/Almawhooboon_Fel_Ard_L3rd_Bug.png', 'https://drive.google.com/uc?id=1tiYb1ss9riKNrTFcj2nGXDlaqH5s0icp&export=download'];
-ProgLogosList['Alusbua Asury'] = ['Images/Alusbua Asury_L3rd_Bug.png', 'https://drive.google.com/uc?id=1S9AosRSWP0bR1COsDauSYYjmOX9kIzit&export=download'];
-ProgLogosList['Aseer Alkotob'] = ['Images/Aseer_Alkotob_L3rd_Bug.png', 'https://drive.google.com/uc?id=1u89_bIjoYQ7QYHOWyHnYvIG-vqMRg4yn&export=download'];
-ProgLogosList['Diwan Alarab'] = ['Images/Diwan_Alarab_L3rd_Bug.png', 'https://drive.google.com/uc?id=1N-nt1VhR3ak25bRuuLfCnElJ_spUVyIi&export=download'];
-ProgLogosList['Fe Rewaya Okhra'] = ['Images/Wa Fi Riwaya Ukra_L3rd_Bug.png', 'https://drive.google.com/uc?id=1OydMbcoyLfXh-WILg2gUjpU_mA1UP19v&export=download'];
-ProgLogosList['Filmi'] = ['Images/Filmi_L3rd_Bug.png', 'https://drive.google.com/uc?id=1ZWDi-PnAMcrtJ1lESY0JzYudysunxjl1&export=download'];
-ProgLogosList['Foshat Fikr'] = ['Images/Foshat_Fikr_L3rd_Bug.png', 'https://drive.google.com/uc?id=1lag_7-tR5uqoID_8-8hSUAqvLmzLVgDW&export=download'];
-ProgLogosList['Hadith Khas'] = ['Images/Hadith_Khas_L3rd_Bug.png', 'https://drive.google.com/uc?id=13ldR1dlRaDGvLwICDuKebuQUTVR8kpm9&export=download'];
-ProgLogosList['Huna Filisteen'] = ['Images/Huna Filisteen_L3rd_Bug.png', 'https://drive.google.com/uc?id=1p2nooboOhV5MQUJnf_Td0nk0uvcQRk5g&export=download'];
-ProgLogosList['Jiran Alarab'] = ['Images/Jeeran_Alarab_L3rd_Bug.png', 'https://drive.google.com/uc?id=1_FouOCi-sis99mVsvIA4Qu943Y7QaomP&export=download'];
-ProgLogosList['Jadal'] = ['Images/Jadal_L3rd_Bug.png', 'https://drive.google.com/uc?id=1vv4hIryh47OVrNl6DQg1LJIND2tBc77e&export=download'];
-ProgLogosList['Joe Show'] = ['Images/Joe Show Bug.png', 'https://drive.google.com/uc?id=1DyVolcE5KzLlH4KBS0MznQvc_SX6KUsW&export=download'];
-ProgLogosList['Khalij Elarab'] = ['Images/KA BUG.png', 'https://drive.google.com/uc?id=1ggXqXEkC946dOZYr92qldmqrcrrBsn2Q&export=download'];
-ProgLogosList['Kama Warad'] = ['Images/Kama_Warad_Bug.png', 'https://drive.google.com/uc?id=17oqmzY_mZTp6Ir6keHr0kJ5G9yrk38Gb&export=download'];
-ProgLogosList['Khat Akhdar'] = ['Images/Khat_akhdar.png', 'https://drive.google.com/uc?id=1cFsZc7V7Q43hus2BMb9VT9DNu3W7ptp9&export=download'];
-ProgLogosList['Kuntu Hunak'] = ['Images/Kuntu Hunak_L3rd_Bug.png', 'https://drive.google.com/uc?id=1v4qXLghsqP_HMj-ZoxzgMRGQHhTiy62C&export=download'];
-ProgLogosList['Lil Khabar Bakya'] = ['Images/Lil_Khabar_Bakia_Bug.png', 'https://drive.google.com/uc?id=1LpOwWRrc0MXhqNiP0xxktB3aVtd5GSpt&export=download'];
-ProgLogosList['Maalaat Alnass'] = ['Images/Maalaat_Alnass Bug.png', 'https://drive.google.com/uc?id=1hGKmAaNFQSI8ZolE9m84tHtGDJPjhjCj&export=download'];
-ProgLogosList['Rehla Be Mahfathtain'] = ['Images/Rehla_BM_S2.png', 'https://drive.google.com/uc?id=1TI-kGN9JA67aCXQfAEgzv7BCSiotxaJf&export=download'];
-ProgLogosList['Remix'] = ['Images/Remix Bug.png', 'https://drive.google.com/uc?id=1gKA1ZsbDruYrJDe72FB3nIgwe-8S9RZH&export=download'];
-ProgLogosList['Shababik'] = ['Images/SH_L3rd_Bug.png', 'https://drive.google.com/uc?id=1WNFq1grqC184ubax-SQzqTlrIca8iIou&export=download'];
-ProgLogosList['Sunduq Eldunia'] = ['Images/Sunduq_Bug.jpg', 'https://drive.google.com/uc?id=1hq1sje5BuYJzK-P7SH8Dqq_zn3z8n_Np&export=download'];
-ProgLogosList['Taqdir Mawqif'] = ['Images/Taqdir Mawqif_L3rd_Bug.png', 'https://drive.google.com/uc?id=1TeN9C6KgfeqpOGIS2E2Ojkls86z9X1Ga&export=download'];
-ProgLogosList['War Photography'] = ['Images/War_Photography_L3rd_Bug.png', 'https://drive.google.com/uc?id=1o71S-kucNumfXrQi7JJXddn342HdTkx1&export=download'];
-ProgLogosList['Wonho'] = ['Images/Wonho_L3rd_Bug.png', 'https://drive.google.com/uc?id=1T3Sk4cuJCEe4uVU3bvIcoQcK3NTWKXM-&export=download'];
-ProgLogosList['Yawmiyat Alfilistini'] = ['Images/Yawmiyat Alfilistini_L3rd_Bug.png', 'https://drive.google.com/uc?id=1atELJXTgz1jfKGfh-4KsGekbGCX2pfi2&export=download'];
-ProgLogosList['Other Programme'] = ['Images/VFLogo.png', 'https://drive.google.com/uc?id=1ZOx-tCJwvMqvN8cayDkCTHGSSB2VlvHK&export=download'];
+ProgLogosList['Alaraby Alyoum'] = ['/assets/Alaraby_Alyoum_Bug.png', 'https://drive.google.com/uc?id=1qfL8SdBC_2Bu7_8kmp55rqLYXN8btNGj&export=download'];
+ProgLogosList['Alaraby Al Ryadhi'] = ['/assets/Alaraby_Alriadi_Bug.png', 'https://drive.google.com/uc?id=1QdhEyuXIFaH_3PGKLpu_yxDQRn2eyl2w&export=download'];
+ProgLogosList['Aljar Alghareen'] = ['/assets/Aljar_Alghareen_L3rd_Bug.png', 'https://drive.google.com/uc?id=1ys5BFm1GLKp0xidqAY4Teal24wAoND8Q&export=download'];
+ProgLogosList['Alkashaf'] = ['/assets/Alkashaf_L3rd_Bug.png', 'https://drive.google.com/uc?id=1oGzBI0wRfuqNIKNqGwQibXqMGIbiRdUm&export=download'];
+ProgLogosList['Almagharby'] = ['/assets/Almagharby L3rd_Bug.png', 'https://drive.google.com/uc?id=1WWDQMaGtP2HqrRg3OE9WvVClcG1zAgsL&export=download'];
+ProgLogosList['Almawhooboon Fel Ard'] = ['/assets/Almawhooboon_Fel_Ard_L3rd_Bug.png', 'https://drive.google.com/uc?id=1tiYb1ss9riKNrTFcj2nGXDlaqH5s0icp&export=download'];
+ProgLogosList['Alusbua Asury'] = ['/assets/Alusbua Asury_L3rd_Bug.png', 'https://drive.google.com/uc?id=1S9AosRSWP0bR1COsDauSYYjmOX9kIzit&export=download'];
+ProgLogosList['Aseer Alkotob'] = ['/assets/Aseer_Alkotob_L3rd_Bug.png', 'https://drive.google.com/uc?id=1u89_bIjoYQ7QYHOWyHnYvIG-vqMRg4yn&export=download'];
+ProgLogosList['Diwan Alarab'] = ['/assets/Diwan_Alarab_L3rd_Bug.png', 'https://drive.google.com/uc?id=1N-nt1VhR3ak25bRuuLfCnElJ_spUVyIi&export=download'];
+ProgLogosList['Fe Rewaya Okhra'] = ['/assets/Wa Fi Riwaya Ukra_L3rd_Bug.png', 'https://drive.google.com/uc?id=1OydMbcoyLfXh-WILg2gUjpU_mA1UP19v&export=download'];
+ProgLogosList['Filmi'] = ['/assets/Filmi_L3rd_Bug.png', 'https://drive.google.com/uc?id=1ZWDi-PnAMcrtJ1lESY0JzYudysunxjl1&export=download'];
+ProgLogosList['Foshat Fikr'] = ['/assets/Foshat_Fikr_L3rd_Bug.png', 'https://drive.google.com/uc?id=1lag_7-tR5uqoID_8-8hSUAqvLmzLVgDW&export=download'];
+ProgLogosList['Hadith Khas'] = ['/assets/Hadith_Khas_L3rd_Bug.png', 'https://drive.google.com/uc?id=13ldR1dlRaDGvLwICDuKebuQUTVR8kpm9&export=download'];
+ProgLogosList['Huna Filisteen'] = ['/assets/Huna Filisteen_L3rd_Bug.png', 'https://drive.google.com/uc?id=1p2nooboOhV5MQUJnf_Td0nk0uvcQRk5g&export=download'];
+ProgLogosList['Jiran Alarab'] = ['/assets/Jeeran_Alarab_L3rd_Bug.png', 'https://drive.google.com/uc?id=1_FouOCi-sis99mVsvIA4Qu943Y7QaomP&export=download'];
+ProgLogosList['Jadal'] = ['/assets/Jadal_L3rd_Bug.png', 'https://drive.google.com/uc?id=1vv4hIryh47OVrNl6DQg1LJIND2tBc77e&export=download'];
+ProgLogosList['Joe Show'] = ['/assets/Joe Show Bug.png', 'https://drive.google.com/uc?id=1DyVolcE5KzLlH4KBS0MznQvc_SX6KUsW&export=download'];
+ProgLogosList['Khalij Elarab'] = ['/assets/KA BUG.png', 'https://drive.google.com/uc?id=1ggXqXEkC946dOZYr92qldmqrcrrBsn2Q&export=download'];
+ProgLogosList['Kama Warad'] = ['/assets/Kama_Warad_Bug.png', 'https://drive.google.com/uc?id=17oqmzY_mZTp6Ir6keHr0kJ5G9yrk38Gb&export=download'];
+ProgLogosList['Khat Akhdar'] = ['/assets/Khat_akhdar.png', 'https://drive.google.com/uc?id=1cFsZc7V7Q43hus2BMb9VT9DNu3W7ptp9&export=download'];
+ProgLogosList['Kuntu Hunak'] = ['/assets/Kuntu Hunak_L3rd_Bug.png', 'https://drive.google.com/uc?id=1v4qXLghsqP_HMj-ZoxzgMRGQHhTiy62C&export=download'];
+ProgLogosList['Lil Khabar Bakya'] = ['/assets/Lil_Khabar_Bakia_Bug.png', 'https://drive.google.com/uc?id=1LpOwWRrc0MXhqNiP0xxktB3aVtd5GSpt&export=download'];
+ProgLogosList['Maalaat Alnass'] = ['/assets/Maalaat_Alnass Bug.png', 'https://drive.google.com/uc?id=1hGKmAaNFQSI8ZolE9m84tHtGDJPjhjCj&export=download'];
+ProgLogosList['Rehla Be Mahfathtain'] = ['/assets/Rehla_BM_S2.png', 'https://drive.google.com/uc?id=1TI-kGN9JA67aCXQfAEgzv7BCSiotxaJf&export=download'];
+ProgLogosList['Remix'] = ['/assets/Remix Bug.png', 'https://drive.google.com/uc?id=1gKA1ZsbDruYrJDe72FB3nIgwe-8S9RZH&export=download'];
+ProgLogosList['Shababik'] = ['/assets/SH_L3rd_Bug.png', 'https://drive.google.com/uc?id=1WNFq1grqC184ubax-SQzqTlrIca8iIou&export=download'];
+ProgLogosList['Sunduq Eldunia'] = ['/assets/Sunduq_Bug.jpg', 'https://drive.google.com/uc?id=1hq1sje5BuYJzK-P7SH8Dqq_zn3z8n_Np&export=download'];
+ProgLogosList['Taqdir Mawqif'] = ['/assets/Taqdir Mawqif_L3rd_Bug.png', 'https://drive.google.com/uc?id=1TeN9C6KgfeqpOGIS2E2Ojkls86z9X1Ga&export=download'];
+ProgLogosList['War Photography'] = ['/assets/War_Photography_L3rd_Bug.png', 'https://drive.google.com/uc?id=1o71S-kucNumfXrQi7JJXddn342HdTkx1&export=download'];
+ProgLogosList['Wonho'] = ['/assets/Wonho_L3rd_Bug.png', 'https://drive.google.com/uc?id=1T3Sk4cuJCEe4uVU3bvIcoQcK3NTWKXM-&export=download'];
+ProgLogosList['Yawmiyat Alfilistini'] = ['/assets/Yawmiyat Alfilistini_L3rd_Bug.png', 'https://drive.google.com/uc?id=1atELJXTgz1jfKGfh-4KsGekbGCX2pfi2&export=download'];
+ProgLogosList['Other Programme'] = ['/assets/VFLogo.png', 'https://drive.google.com/uc?id=1ZOx-tCJwvMqvN8cayDkCTHGSSB2VlvHK&export=download'];
 
 
-$(document).ready(function() {
+$(document).on('turbolinks:load', function() {
+  $('.datepicker').datepicker({
+    orientation: "top right"
+  });
   var AmountField = document.getElementById("AmountField");
   var NoOfPartsSelector = document.getElementById("NoOfParts");
+  
 
   // Load the list of programes
   LoadProgList(ProgLogosList);
@@ -155,7 +160,7 @@ $(document).ready(function() {
 
     //var selectedOptionText = $("#ProgramTitleOption option:selected").text();
     $("#ProgTitle").val(ProgramTitleOption.toUpperCase());
-    $("#ViewingFormTitle h3").html(ProgramTitleOption.toUpperCase() + " Viewing Form")
+    $("#ViewingFormTitle h5").html(ProgramTitleOption.toUpperCase() + " Viewing Form")
     $("#Prog_logo").attr("src", ProgLogosList[ProgramTitleOption][0]);
 
     // For Email Filling preparation; Fill the URL (not the local icon)

@@ -1,4 +1,5 @@
 /*Custom bootstrap variables must be set or imported *before* bootstrap.*/
+@import "bootstrap-datepicker";
 @import "bootstrap";
 @import "alertify.core";
 @import "alertify.default";
@@ -39,7 +40,7 @@ input:disabled {
 
 select {
   margin: auto;
-  padding: 12px 20px;
+  padding: 3px 20px;
   margin-bottom: 2%;
   box-sizing: border-box;
   text-align: center;
@@ -187,7 +188,7 @@ a:hover {
   /* border-radius: 5px; */
 }
 
-#ViewingFormTitle h3 {
+#ViewingFormTitle h5 {
   margin: 0px 0px 15px 0px;
 }
 
@@ -205,9 +206,9 @@ a:hover {
 
 /* Create two equal columns that sits next to each other */
 
-.column {
-  flex: 50%;
-  margin: 10px 3px;
+.col {
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
 .row-in {
@@ -231,7 +232,7 @@ a:hover {
 }
 
 .row-in label {
-  /*background: #1880d6;*/
+  background: #1880d6;
   font-family: verdana;
   font-size: 14px;
   font-weight: bold;
@@ -242,7 +243,7 @@ a:hover {
 .comments-row {
   width: 98%;
   margin: auto;
-  margin-top: 17px;
+  margin-top: 6px;
 }
 
 .comments-row label {
@@ -262,7 +263,7 @@ a:hover {
   font-size: 14px;
   font-weight: bold;
   width: 100%;
-  margin: 18px 0px 0px 0px;
+  margin: 2px 0px 0px 0px;
   border-radius: 5px;
 }
 
@@ -275,9 +276,9 @@ a:hover {
 }
 
 #RowTitle {
-  /* width: auto; */
+  width: auto;
   margin: auto;
-  margin-bottom: -10px;
+  margin-bottom: 10px;
   font-size: 13px;
   font-family: verdana;
   background-color: #055b9e!important;
