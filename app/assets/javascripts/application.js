@@ -16,9 +16,13 @@
 //= require_tree .
 //= require alertify
 //= require jquery3
+//= require jquery_ujs
+//= require alertify
+//= require alertify/confirm-ujs
 //= require popper
 //= require bootstrap-datepicker
 //= require bootstrap-sprockets
+//= require cocoon
 
 var framerate = 25;
 
@@ -74,84 +78,15 @@ ProgLogosList['Taqdir Mawqif'] = ['/assets/Taqdir Mawqif_L3rd_Bug.png', 'https:/
 ProgLogosList['War Photography'] = ['/assets/War_Photography_L3rd_Bug.png', 'https://drive.google.com/uc?id=1o71S-kucNumfXrQi7JJXddn342HdTkx1&export=download'];
 ProgLogosList['Wonho'] = ['/assets/Wonho_L3rd_Bug.png', 'https://drive.google.com/uc?id=1T3Sk4cuJCEe4uVU3bvIcoQcK3NTWKXM-&export=download'];
 ProgLogosList['Yawmiyat Alfilistini'] = ['/assets/Yawmiyat Alfilistini_L3rd_Bug.png', 'https://drive.google.com/uc?id=1atELJXTgz1jfKGfh-4KsGekbGCX2pfi2&export=download'];
-ProgLogosList['Other Programme'] = ['/assets/VFLogo.png', 'https://drive.google.com/uc?id=1ZOx-tCJwvMqvN8cayDkCTHGSSB2VlvHK&export=download'];
+ProgLogosList['Other Program'] = ['/assets/VFLogo.png', 'https://drive.google.com/uc?id=1ZOx-tCJwvMqvN8cayDkCTHGSSB2VlvHK&export=download'];
 
 
 $(document).on('turbolinks:load', function() {
-  $('.datepicker').datepicker({
-    orientation: "top right"
-  });
-  var AmountField = document.getElementById("AmountField");
-  var NoOfPartsSelector = document.getElementById("NoOfParts");
-  
 
   // Load the list of programes
   LoadProgList(ProgLogosList);
   // then style it to the custom select
-  //CustomSelectPrep();
-
-  $("#NoOfParts").on('change', function() {
-    NoOfPartsSelector = this.value;
-
-    var allNoOfPartsItems = $('#NoOfParts option').size();
-    HideAllParts(allNoOfPartsItems);
-
-    for (var i = 1; i <= NoOfPartsSelector; i++) {
-      var id = "#Row" + (i);
-      if ($(id).length == 0) {
-        console.log('create part!')
-        $("#ViewingForm").append('<div class="Titled-row" id="Row' + (i) + '">' +
-          '<div id=\"RowTitle">' +
-          '<h3>Part: ' + (i) + '</h3>' +
-          '</div>' +
-          '<div class="row">' +
-          '' +
-          '<div class="column">' +
-          '' +
-          '<div class="row-in">' +
-          '<label class="col-30">IN</label>' +
-          '<input type="text" class="col-70 calc" placeholder="HH:MM:SS:FF" id="Row' + (i) + 'IN" pattern="([0-9][0-9]):([0-5][0-9]):([0-5][0-9]):([0-2][0-4])">' +
-          '</div>' +
-          '<div class="row-in">' +
-          '<label class="col-30">OUT</label>' +
-          '<input type="text" class="col-70 calc" placeholder="HH:MM:SS:FF" id="Row' + (i) + 'OUT" pattern="([0-9][0-9]):([0-5][0-9]):([0-5][0-9]):([0-2][0-4])">' +
-          '</div>' +
-          '<div class="row-in">' +
-          '<label class="col-30">DUR</label>' +
-          '<input type="text" class="col-70" placeholder="HH:MM:SS:FF" id="Row' + (i) + 'DUR" disabled = "disabled" pattern="([0-9][0-9]):([0-5][0-9]):([0-5][0-9]):([0-2][0-4])">' +
-          '</div>' +
-          '' +
-          '</div>' +
-          '<div class="column">' +
-          '<div class="comments-row">' +
-          '<label>Notes</label>' +
-          '<textarea rows="4" cols="50" id="Row' + (i) + 'Notes"></textarea>' +
-          '</div>' +
-          '</div>' +
-          '</div>' +
-          '</div>');
-
-        //$(id).show();
-
-      } else {
-        $(id).show();
-      }
-      // If the number of parts is more than one
-      if (i > 1) {
-        //get the out value of the previous part if it is already filled
-        var OUTpart = document.getElementById("Row" + (i - 1) + "OUT").value;
-        if (OUTpart !== '' && isValidTimeCode(OUTpart, "Row" + (i - 1) + "OUT") === true) {
-          // convert it to timecode + 1 frame
-          var newOUTpart = frames_to_timecode(timecode_to_frames(OUTpart) + 1);
-          $(id + "IN").val(newOUTpart);
-        } else {
-          $(id + "IN").val("");
-          $(id + "DUR").val("");
-        }
-      }
-    }
-
-  });
+  
 
   //ViewingFormTitle
   //
@@ -166,54 +101,42 @@ $(document).on('turbolinks:load', function() {
     // For Email Filling preparation; Fill the URL (not the local icon)
     ProgLogoUrl = ProgLogosList[ProgramTitleOption][1];
 
-    if (ProgramTitleOption === "Other Programme") {
-      $("#ProgTitle").removeAttr('disabled');
+    if (ProgramTitleOption === "Other Program") {
+      $("#ProgTitle").removeAttr('readonly');
 
     } else {
-      $("#ProgTitle").attr('disabled', 'disabled');
+      $("#ProgTitle").attr('readonly', true);
     }
 
 
   });
 
-  var doc = new jsPDF();
-  var specialElementHandlers = {
-    '#editor': function(element, renderer) {
-      return true;
-    }
-  };
+  $('#remove_association').hide();
 
-  $('#SavePDFBtn').click(function() {
-    //   doc.addHTML($('#ViewingForm').html(), 15, 15, {
-    //     'width': 210,
-    //     'elementHandlers': specialElementHandlers
-    //   });
-    //   doc.save('sample-file.pdf');
-    // });
-    //
-    //
-    var pdf = new jsPDF('p', 'pt', 'a4');
-    pdf.addHTML($('#ViewingForm'), 5, 5, function() {
-      pdf.save('report.pdf');
-    });
-    //
-    //
-    //
-    //makePDF("ViewingForm");
+  // adding part fields with cocoon
+  $('.parts').on('cocoon:after-insert', function(e, inserted_item) {
+    var num = $('.nested-fields').length;
+    $(inserted_item).wrap("<div class='Titled-row' id='Row" + num + "'></div>")
+    $("<div id='RowTitle'><h5> Part: " + num + "</h5></div>").prependTo(inserted_item);
+    $('#NoOfParts').val(num);
+    $(inserted_item).find('input.in').prop('id', "Row" + num + "IN");
+    $(inserted_item).find('input.out').prop('id', "Row" + num + "OUT");
+    $(inserted_item).find('input.dur').prop('id', "Row" + num + "DUR");
+    $(inserted_item).find('textarea.notes').prop('id', "Row" + num + "Notes");
+
+    $('#remove_association').show();
   });
 
-  $('#sendForm').click(function() {
-    if (isValidInputs()) {
-      alertify.confirm("Confirm", "Are you sure you want to send the form?",
-        function() {
-          sendEmail();
-          //alertify.success('Yes');
-        },
-        function() {
-          alertify.error('Send Cancelled!');
-        });
+  // removing part fields
+  $('#remove_association').on('click', function() {
+    var num = $('.nested-fields').length;
+    $('#Row' + num).remove();
+    $('#NoOfParts').val(num - 1);
+    if (num - 1 == 0) {
+      $('#remove_association').hide();
     }
   });
+
 
   $('#PrintFormBtn').click(function() {
     window.print();
@@ -223,7 +146,7 @@ $(document).on('turbolinks:load', function() {
   $("#ViewingForm").on('mouseover', '.calc', function() {
     $('.calc').change(function() {
       //console.log(1);
-      var sourceID = $(this).attr("id");
+      var sourceID = $(this).prop("id");
 
       var RowNo = sourceID.substring(0, 4);
       var currentRow = parseInt(RowNo.substr(RowNo.length - 1));
@@ -453,11 +376,11 @@ function isValidInputs() {
 
   $("#errorMsg").html(ErrorMsg + "</p>");
 
-  // if (isAllValid == false) {
-  //   //$("#errorMsgDiv").show().delay(10000).fadeOut();
-  // } else {
-  return isAllValid;
-  //}
+  if (isAllValid == false) {
+    $("#errorMsgDiv").show().delay(10000).fadeOut();
+  } else {
+    return isAllValid;
+  }
 }
 
 
@@ -495,3 +418,56 @@ function CalcDur(INpart, OUTpart) {
     event.value = "";
   }
 }
+
+// duration calculation
+// var framerate = 24;
+// var time1 = "";
+// var time2 = "";
+// var target;
+
+// function valueOfFirstField(input) {
+//   validateFormat(input)
+//   time1 = $(input).val();
+//   target = $(input).closest('div').next().next().find('.duration');
+//   calculateDuration(time1, time2, target);
+// }
+
+// function valueOfSecondField(input) {
+//   validateFormat(input)
+//   time2 = $(input).val();
+//   target = $(input).closest('div').next().find('.duration');
+//   calculateDuration(time1, time2, target);
+// }
+
+// function calculateDuration(input1, input2, event) {
+//   if (input1 != "" && input2 != "") {
+//     event.val(frames_to_timecode(timecode_to_frames(input2) - timecode_to_frames(input1)));
+//   } else {
+//     event.val("");
+//   }
+// }
+
+// function timecode_to_frames(timecode) {
+//   var a = timecode.split(':');
+//   return ((Number(a[0])*3600 + Number(a[1])*60 + Number(a[2]))*framerate + Number(a[3]));
+// }
+
+// function frames_to_timecode(frames) {
+//   var hh = Math.floor(frames / (3600 * framerate));
+//   var mm = Math.floor((frames / (60 * framerate)) % 60);
+//   var ss = Math.floor((frames / framerate) % 60);
+//   var ff = frames % framerate;
+//   var result = hh.toString().padStart(2, "0") + ":" + mm.toString().padStart(2, "0") + ":" + ss.toString().padStart(2, "0") + ":" + ff.toString().padStart(2, "0");
+//   return result;
+// }
+
+// function validateFormat(input) {
+//   var wrongFormatMessage = "The format of this input must be '00:00:00:00'";
+//   var format = /^\d{2}:\d{2}:\d{2}:([01]\d|2[0-4])$/;
+//   var inputValue = $(input).val();
+
+//   if(!inputValue.match(format)) {
+//     $(input).val('');
+//     alert(wrongFormatMessage);
+//   } 
+// }

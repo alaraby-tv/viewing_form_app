@@ -1,8 +1,11 @@
 /*Custom bootstrap variables must be set or imported *before* bootstrap.*/
-@import "bootstrap-datepicker";
 @import "bootstrap";
-@import "alertify.core";
-@import "alertify.default";
+@import "bootstrap-datepicker";
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css");
+@import "alertify";
+@import "alertify/default";
+@import "alertify/bootstrap";
+
 
 body {
   width: 70%;
@@ -16,7 +19,7 @@ input {
   /* text-align: center; */
   font-size: 14px;
   font-weight: bold;
-  border-width: 2px;
+  /* border-width: 2px; */
   font-family: verdana;
   border-bottom-right-radius: 5px;
   border-top-right-radius: 5px;
@@ -34,7 +37,7 @@ input:valid {
    border-color: white; 
 }
 
-input:disabled {
+input:readonly {
   color: black;
 }
 
@@ -50,32 +53,8 @@ select {
   border-color: #fff;
 }
 
-.button {
-  padding: 14px 0px;
-  font-size: 16px;
-  text-align: center;
-  cursor: pointer;
-  outline: none;
-  color: #fff;
-  background-color: #08375c;
-  border: none;
-  border-radius: 15px;
-  box-shadow: 0 3px #999;
-  /* margin-left: 35%; */
-  width: 90%;
-  display: block;
-  margin: auto;
-  margin-bottom: 20px;
-}
-
-.button:hover {
-  background-color: #0fa29d;
-}
-
-.button:active {
-  background-color: #3e8e41;
-  box-shadow: 0 5px #666;
-  transform: translateY(4px);
+.form-control {
+  border-radius: 0 5px 5px 0;
 }
 
 a {
@@ -189,30 +168,19 @@ a:hover {
 }
 
 #ViewingFormTitle h5 {
-  margin: 0px 0px 15px 0px;
+  margin: 10px auto;
 }
 
 #BtnsDiv {
-  /*display: none;*/
-  margin: auto;
+  margin: 10px auto;
   width: 70%;
 }
 
-.row {
-  /*display: flex;*/
-  width: 95%;
-  margin: auto;
-}
 
 /* Create two equal columns that sits next to each other */
 
-.col {
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
 .row-in {
-  width: 98%;
+  width: 100%;
   margin: 5px;
 }
 
@@ -220,12 +188,19 @@ a:hover {
   float: left;
   clear: both;
   width: 30%;
-  margin: 6px 0px;
-  padding: 7px;
+  margin: 5px 0px;
+  padding: 8px;
+}
+
+.col-55 {
+  flex: 55%;
+  float: left;
+  width: 51%;
+  margin: 5px 0px;
 }
 
 .col-70 {
-  /* flex: 70%; */
+  flex: 70%;
   float: left;
   width: 66%;
   margin: 5px 0px;
@@ -238,6 +213,10 @@ a:hover {
   font-weight: bold;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
+}
+
+#add_association {
+  margin: 5px;
 }
 
 .comments-row {
@@ -290,7 +269,7 @@ a:hover {
   border-radius: 5px;
 }
 
-#RowTitle h3 {
+#RowTitle h5 {
   padding: 0px;
   margin: auto;
 }
