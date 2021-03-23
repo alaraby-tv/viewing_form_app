@@ -64,6 +64,6 @@ class ViewingFormsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def viewing_form_params
-      params.require(:viewing_form).permit(:program_title, :ingest_date, :aspect_ratio, :program_id, :tx_date, :number_of_parts)
+      params.require(:viewing_form).permit(:program_title, :ingest_date, :aspect_ratio, :program_id, :tx_date, :number_of_parts, parts_attributes: [:id, :start, :finish, :duration, :notes, :_destroy])
     end
 end
