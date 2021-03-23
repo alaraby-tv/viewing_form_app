@@ -1,0 +1,24 @@
+<div class="nested-fields">
+  <div class="row">
+    <div class="col">
+      <div class="row-in">
+        <%= f.label :start, 'IN', class: 'col-30' %>
+        <%= f.text_field :start, class: "col-70 calc in form-control", required: true, readonly: true, placeholder: "HH:MM:SS:FF", value: "00:00:00:00", pattern: "([0-9][0-9]):([0-5][0-9]):([0-5][0-9]):([0-2][0-4])" %>
+      </div>
+      <div class="row-in">
+        <%= f.label :finish, 'OUT', class: 'col-30' %>
+        <%= f.text_field :finish, class: "col-70 calc out form-control", required: true, autofocus: true, placeholder: "HH:MM:SS:FF", pattern: "([0-9][0-9]):([0-5][0-9]):([0-5][0-9]):([0-2][0-4])" %>
+      </div>
+      <div class="row-in">
+        <%= f.label :duration, 'DUR', class: 'col-30' %>
+        <%= f.text_field :duration, class: "col-70 calc dur form-control", required: true, placeholder: "HH:MM:SS:FF", pattern: "([0-9][0-9]):([0-5][0-9]):([0-5][0-9]):([0-2][0-4])" %>
+      </div>
+    </div>
+    <div class="col">
+      <div class="comments-row">
+        <%= f.label :notes, class: 'col-3' %>
+        <%= f.text_area :notes, rows: 3, cols: 50, class: 'notes form-control' %>
+      </div>
+    </div>
+  </div>
+</div>
