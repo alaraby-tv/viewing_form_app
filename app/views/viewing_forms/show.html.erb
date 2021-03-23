@@ -1,39 +1,91 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>User:</strong>
-  <%= @viewing_form.user %>
-</p>
+<div id="ViewingForm">
+  <div id="ViewingFormTitle">
+    <h5><%= @viewing_form.program_title.upcase %> Viewing Form</h5>
+  </div>
 
-<p>
-  <strong>Program title:</strong>
-  <%= @viewing_form.program_title %>
-</p>
+  <div class="row">
+    <div class="col">
+      <div class="row">
+        <p>Name : </p>
+        <%= @viewing_form.user.full_name %>
+      </div>
+      <div class="row">
+        <p>Email : </p>
+        <%= @viewing_form.user.email %>
+      </div>
+      <div class="row">
+        <p>Contact No : </p>
+        <%= @viewing_form.contact_number %>
+      </div>
+      <div class="row">
+        <p>Ingest Date : </p>
+        <%= @viewing_form.ingest_date.to_date %>
+      </div>
+      <div class="row">
+        <p>Aspect Ratio : </p>
+        <%= @viewing_form.aspect_ratio %>
+      </div>
+    </div>
+    <div class="col">
+      <div class="row">
+        <p>Date : </p>
+        <%= @viewing_form.created_at.to_date %>
+      </div>
+      <div class="row">
+        <p>Program Title : </p>
+        <%= @viewing_form.program_title %>
+      </div>
+      <div class="row">
+        <p>Program ID : </p>
+        <%= @viewing_form.program_id %>
+      </div>
+      <div class="row">
+        <p>TX Date : </p>
+        <%= @viewing_form.tx_date.to_date %>
+      </div>
+      <div class="row">
+        <p>No of Parts : </p>
+        <%= @viewing_form.number_of_parts %>
+      </div>
+    </div>
+  </div>
 
-<p>
-  <strong>Ingest date:</strong>
-  <%= @viewing_form.ingest_date %>
-</p>
-
-<p>
-  <strong>Aspect ratio:</strong>
-  <%= @viewing_form.aspect_ratio %>
-</p>
-
-<p>
-  <strong>Program:</strong>
-  <%= @viewing_form.program_id %>
-</p>
-
-<p>
-  <strong>Tx date:</strong>
-  <%= @viewing_form.tx_date %>
-</p>
-
-<p>
-  <strong>Number of parts:</strong>
-  <%= @viewing_form.number_of_parts %>
-</p>
+  <!-- Parts Info -->
+  <div class="parts">
+    <div class='Titled-row'>
+      <% @viewing_form.parts.each_with_index do |part, i| %>
+      <div id='RowTitle'>
+        <h3> Part: <%= i + 1 %></h3>
+      </div>
+        <div class="row">
+          <div class="col">
+            <div class="row">
+              <p>IN : </p>
+              <%= part.start %>
+            </div>
+            <div class="row">
+              <p>OUT : </p>
+              <%= part.finish %>
+            </div>
+            <div class="row">
+              <p>DUR : </p>
+              <%= part.duration %>
+            </div>
+          </div>
+          <div class="col">
+            <div class="comments-row">
+              <div class="row">
+                <p>Notes : </p>
+                <%= part.notes %>
+              </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div> 
+</div>
 
 <%= link_to 'Edit', edit_viewing_form_path(@viewing_form) %> |
 <%= link_to 'Back', viewing_forms_path %>
