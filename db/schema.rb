@@ -10,10 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_15_173547) do
+ActiveRecord::Schema.define(version: 2021_03_18_130855) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "parts", force: :cascade do |t|
+    t.string "start"
+    t.string "finish"
+    t.string "duration"
+    t.text "notes"
+    t.bigint "viewing_form_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["viewing_form_id"], name: "index_parts_on_viewing_form_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "first_name"
@@ -54,5 +65,6 @@ ActiveRecord::Schema.define(version: 2021_03_15_173547) do
     t.index ["user_id"], name: "index_viewing_forms_on_user_id"
   end
 
+  add_foreign_key "parts", "viewing_forms"
   add_foreign_key "viewing_forms", "users"
 end
