@@ -10,114 +10,102 @@
   </div>
 </div>
 <%= form_with(model: viewing_form, local: true) do |form| %>
-  <% if viewing_form.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(viewing_form.errors.count, "error") %> prohibited this viewing_form from being saved:</h2>
-
-      <ul>
-      <% viewing_form.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
   <div id="ViewingForm">
     <div id="ViewingFormTitle">
       <%= image_tag "Alaraby_Alyoum_Bug.png", alt: "program_logo", id: "Prog_logo" %>
       <h5>ALARABY ALYOUM Viewing Form</h5>
     </div>
 
+    <% if viewing_form.errors.any? %>
+      <div id="error_explanation" class="alert alert-danger">
+        <h2><%= pluralize(viewing_form.errors.count, "error") %> prohibited this Viewing Form from being sent:</h2>
+        <hr>
+        <ul>
+        <% viewing_form.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+      
     <div class="row">
       <div class="col">
         <div class="row-in">
           <%= label_tag 'name', nil, class: 'col-30' %>
-          <%= text_field_tag 'senderName', current_user.full_name, disabled: true, class: "col-70" %>
+          <%= text_field_tag 'senderName', current_user.full_name, readonly: true, class: "col-70 form-control" %>
         </div>
         <div class="row-in">
           <%= label_tag 'email', nil, class: 'col-30' %>
-          <%= text_field_tag 'senderEmail', current_user.email, disabled: true, class: "col-70" %>
+          <%= text_field_tag 'senderEmail', current_user.email, readonly: true, class: "col-70 form-control" %>
         </div>
         <div class="row-in">
           <%= form.label :contact_number, 'Contact No', class: 'col-30' %>
-          <%= form.number_field :contact_number, placeholder: "Enter your mobile", id: "ContactNo", class: "col-70" %>
+          <%= form.number_field :contact_number, placeholder: "Enter your mobile", id: "ContactNo", class: "col-70 form-control" %>
         </div>
         <div class="row-in">
           <%= form.label :ingest_date, class: 'col-30' %>
-          <%= form.date_field :ingest_date, id: "IngestDate", class: "col-70" %>
+          <%= form.text_field :ingest_date, placeholder: "yyyy-mm-dd", autocomplete: 'disabled', required: true, id: "IngestDate", class: "col-70 date form-control" %>
         </div>
         <div class="row-in">
           <%= form.label :aspect_ratio, class: 'col-30' %>
-          <%= form.select :aspect_ratio, options_for_select(['16:9', '4:3']), {}, id: "AspectRatio", class: "col-70" %>
+          <%= form.select :aspect_ratio, options_for_select(['16:9', '4:3']), {}, id: "AspectRatio", class: "col-70 form-control" %>
         </div>
       </div>
       <div class="col">
         <div class="row-in">
           <%= label_tag :date, nil, class: 'col-30' %>
-          <%= text_field_tag :date, Date.today.strftime("%d/%m/%Y") , placeholder: "Date", disabled: true, id: "TodayDate", class: "col-70" %>
+          <%= text_field_tag :date, Date.today , placeholder: "yyyy-mm-dd", readonly: true, id: "TodayDate", class: "col-70 form-control" %>
         </div>
         <div class="row-in">
           <%= form.label :program_title, class: 'col-30' %>
-          <%= form.text_field :program_title, value: "ALARABY ALYOUM", placeholder: "Programme Title", disabled: true, id: "ProgTitle", class: "col-70" %>
+          <%= form.text_field :program_title, value: "ALARABY ALYOUM", placeholder: "Programme Title", required: true, readonly: true, id: "ProgTitle", class: "col-70 form-control" %>
         </div>
         <div class="row-in">
           <%= form.label :program_id, 'Program ID', class: 'col-30' %>
-          <%= form.text_field :program_title, placeholder: "Enter Program ID", id: "ProgID", class: "col-70" %>
+          <%= form.text_field :program_id, placeholder: "Enter Program ID", required: true, autocomplete: 'disabled', id: "ProgID", class: "col-70 form-control" %>
         </div>
         <div class="row-in">
           <%= form.label :tx_date, 'TX Date', class: 'col-30' %>
-          <%= form.date_field :tx_date, placeholder: "TX Date", id: "TXDate", class: "col-70" %>
-          
+          <%= form.text_field :tx_date, placeholder: "yyyy-mm-dd", required: true, autocomplete: 'disabled', id: "TXDate", class: "col-70 date form-control" %>
         </div>
         <div class="row-in">
           <%= form.label :number_of_parts, 'No of parts', class: 'col-30' %>
-          <%= form.select :number_of_parts, options_for_select([1, 2, 3, 4, 5, 6, 7, 8]), {}, id: "NoOfParts", class: "col-70" %>
+          <%= form.text_field :number_of_parts, placeholder: 0, readonly: true, id: "NoOfParts", class: "col-55 form-control" %>
+          <%= link_to_add_association form, :parts, id: "add_association", class: 'badge badge-light', data: { association_insertion_node: '.parts', association_insertion_method: :append } do %>
+            <i class="bi bi-chevron-up"></i>
+          <% end %>
+          <%= link_to "#", id: 'remove_association', class: 'badge badge-light', remote: true do %>
+            <i class="bi bi-chevron-down"></i>
+          <% end %>
         </div>
       </div>
     </div>
 
     <!-- Parts Info -->
-    <div class="Titled-row" id="Row1">
-      <div id="RowTitle">
-        <h3>Part: 1</h3>
-      </div>
+    <div class="parts">
+      <%= form.fields_for :parts do |f| %>
+        <%= render 'part_fields', f: f %>
+      <% end %> 
+    </div>
+    <div id="BtnsDiv">
       <div class="row">
         <div class="col">
-          <div class="row-in">
-            <label class="col-30">IN</label>
-            <input type="text" class="col-70 calc" placeholder="HH:MM:SS:FF" value="00:00:00:00" id="Row1IN" pattern="([0-9][0-9]):([0-5][0-9]):([0-5][0-9]):([0-2][0-4])">
-          </div>
-          <div class="row-in">
-            <label class="col-30">OUT</label>
-            <input type="text" class="col-70 calc" placeholder="HH:MM:SS:FF" id="Row1OUT" pattern="([0-9][0-9]):([0-5][0-9]):([0-5][0-9]):([0-2][0-4])">
-          </div>
-          <div class="row-in">
-            <label class="col-30">DUR</label>
-            <input type="text" class="col-70" placeholder="HH:MM:SS:FF" id="Row1DUR" disabled="disabled" pattern="([0-9][0-9]):([0-5][0-9]):([0-5][0-9]):([0-2][0-4])">
-          </div>
+          <%= form.submit "Send Form", class: 'btn btn-block btn-lg btn-info' %>
         </div>
         <div class="col">
-          <div class="comments-row">
-            <label class="col-3">Notes</label>
-            <textarea rows="4" cols="50" id="Row1Notes"></textarea>
-          </div>
+          <%= submit_tag "Print Form", id: "PrintFormBtn", class: 'btn btn-block btn-lg btn-info' %>
         </div>
-      </div>
-    </div>
-  </div>
-  <div id="editor"></div>
-  <div id="BtnsDiv">
-    <div class="row">
-      <div class="col">
-        <button id="sendForm" class="button">Send Form</button>
-      </div>
-      <!-- <div class="column">
-        <button id="SavePDFBtn" class="button">Save PDF</button>
-      </div> -->
-      <div class="col">
-        <button id="PrintFormBtn" class="button">Print Form</button>
       </div>
     </div>
   </div>
 <% end %>
 
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('.date').datepicker({
+    format: "yyyy-mm-dd",
+    orientation: "auto right"
+    });
+  });
+</script>
