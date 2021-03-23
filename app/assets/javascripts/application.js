@@ -47,8 +47,8 @@ var PartsHtml = "";
 
 
 var ProgLogosList = new Array();
-ProgLogosList['Alaraby Alyoum'] = ['/assets/Alaraby_Alyoum_Bug.png', 'https://drive.google.com/uc?id=1qfL8SdBC_2Bu7_8kmp55rqLYXN8btNGj&export=download'];
-ProgLogosList['Alaraby Al Ryadhi'] = ['/assets/Alaraby_Alriadi_Bug.png', 'https://drive.google.com/uc?id=1QdhEyuXIFaH_3PGKLpu_yxDQRn2eyl2w&export=download'];
+ProgLogosList['Alaraby Alyoum'] = ['<%= asset_path 'Alaraby_Alyoum_Bug.png' %>', 'https://drive.google.com/uc?id=1qfL8SdBC_2Bu7_8kmp55rqLYXN8btNGj&export=download'];
+ProgLogosList['Alaraby Al Ryadhi'] = ['<%= asset_path 'Alaraby_Alriadi_Bug.png' %>', 'https://drive.google.com/uc?id=1QdhEyuXIFaH_3PGKLpu_yxDQRn2eyl2w&export=download'];
 ProgLogosList['Aljar Alghareen'] = ['/assets/Aljar_Alghareen_L3rd_Bug.png', 'https://drive.google.com/uc?id=1ys5BFm1GLKp0xidqAY4Teal24wAoND8Q&export=download'];
 ProgLogosList['Alkashaf'] = ['/assets/Alkashaf_L3rd_Bug.png', 'https://drive.google.com/uc?id=1oGzBI0wRfuqNIKNqGwQibXqMGIbiRdUm&export=download'];
 ProgLogosList['Almagharby'] = ['/assets/Almagharby L3rd_Bug.png', 'https://drive.google.com/uc?id=1WWDQMaGtP2HqrRg3OE9WvVClcG1zAgsL&export=download'];
