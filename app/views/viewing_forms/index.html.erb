@@ -1,18 +1,22 @@
-<p id="notice"><%= notice %></p>
-
 <div id="ViewingForm">
   <div id="ViewingFormTitle">
-    <h4>Viewing Forms</h4>
+    <h5>Viewing Forms</h5>
+  </div>
+  <div class="ButonsDiv">
+    <div class="row justify-content-end">
+      <%= link_to 'New Viewing Form', new_viewing_form_path, class: "btn btn-sm btn-info float-right" %>  
+    </div>
   </div>
 
   <table class="table table-sm table-striped">
-    <thead class="table-primary">
+    <thead class="table-info">
       <tr>
-        <th>Program title</th>
+        <th>Program Title</th>
         <th>Program ID</th>
-        <th>Ingest date</th>
-        <th>Tx date</th>
-        <th>Number of parts</th>
+        <th>Ingest Date</th>
+        <th>Tx Date</th>
+        <th>Parts</th>
+        <th>Creation Date</th>
         <th></th>
       </tr>
     </thead>
@@ -25,6 +29,7 @@
           <td><%= viewing_form.ingest_date.to_date %></td>
           <td><%= viewing_form.tx_date.to_date %></td>
           <td><%= viewing_form.number_of_parts %></td>
+          <td><%= viewing_form.created_at.to_date %></td>
           <td><%= link_to 'View', viewing_form, class: 'badge badge-info' %></td>
         </tr>
       <% end %>
@@ -32,6 +37,3 @@
   </table>
 </div>
 
-<br>
-
-<%= link_to 'New Viewing Form', new_viewing_form_path %>
