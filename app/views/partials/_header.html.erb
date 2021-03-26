@@ -1,8 +1,13 @@
 <div id="Header">
-  <%= image_tag "logo.png", alt: "alaraby_logo", id: "atn_logo" %>
-  <!-- <img id="atn_logo" src="images\logo.png" /> -->
+  <%= link_to image_tag("logo.png", alt: "alaraby_logo", id: "atn_logo"), root_path %>
   <h2 style="font-family: arial; color:white; text-align:center">Alaraby Viewing Form Application</h2>
-  <% if current_user %>
-    <p><%= link_to "Log Out", destroy_user_session_path, method: :delete %></p>
-  <% end %>
+  <ul class="nav justify-content-end">
+    <li class="nav-item">
+      <% if current_user %>
+        <%= link_to destroy_user_session_path, method: :delete do %>
+          <i class="bi bi-box-arrow-right"></i>
+        <% end %>
+      <% end %>
+    </li>
+  </ul>
 </div>
