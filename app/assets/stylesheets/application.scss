@@ -57,6 +57,14 @@ select {
   border-radius: 0 5px 5px 0;
 }
 
+.main-form-part {
+  padding-bottom: 3px;
+}
+
+.notes {
+  border-radius: 5px !important;
+}
+
 a {
   color: #fff;
 }
@@ -116,7 +124,7 @@ a:hover {
   background-color: #fafbd7;
   border-radius: 5px;
   padding: 1px;
-  margin: 10px -5px;
+  margin: 10px 5px;
   border: 2px solid #F44336;
 }
 
@@ -155,7 +163,7 @@ a:hover {
 
 #ViewingFormTitle {
   width: auto;
-  margin: auto;
+  margin:  auto;
   font-size: 13px;
   font-family: verdana;
   background-color: #055b9e!important;
@@ -173,11 +181,15 @@ a:hover {
 
 #BtnsDiv {
   margin: 10px auto;
-  width: 70%;
+  width: 60%;
 }
 
 
 /* Create two equal columns that sits next to each other */
+
+.row {
+  margin: 5px;
+}
 
 .row-in {
   width: 100%;
@@ -195,14 +207,14 @@ a:hover {
 .col-55 {
   flex: 55%;
   float: left;
-  width: 51%;
+  width: 53%;
   margin: 5px 0px;
 }
 
 .col-70 {
   flex: 70%;
   float: left;
-  width: 66%;
+  width: 68%;
   margin: 5px 0px;
 }
 
@@ -216,7 +228,7 @@ a:hover {
 }
 
 #add_association {
-  margin: 5px;
+  margin: 4px;
 }
 
 .comments-row {
@@ -252,6 +264,7 @@ a:hover {
   margin: auto;
   background: #f9dd9e;
   margin-top: 5px;
+  padding-bottom: 4px;
 }
 
 #RowTitle {
@@ -299,6 +312,10 @@ a:hover {
   font-family: verdana;
   font-size: 11px;
   margin-top: 13px;
+}
+
+tbody {
+  color: #555;
 }
 
 @media print {
