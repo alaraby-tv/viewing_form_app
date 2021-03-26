@@ -1,4 +1,5 @@
 class ViewingFormsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_viewing_form, only: %i[ show edit update destroy ]
 
   # GET /viewing_forms or /viewing_forms.json
@@ -21,8 +22,8 @@ class ViewingFormsController < ApplicationController
 
   # POST /viewing_forms or /viewing_forms.json
   def create
-    @viewing_form = current_user.viewing_forms.build(viewing_form_params)
 
+    @viewing_form = current_user.viewing_forms.build(viewing_form_params)
     respond_to do |format|
       if @viewing_form.save
         format.html { redirect_to @viewing_form, notice: "Viewing form was successfully created." }
@@ -64,6 +65,6 @@ class ViewingFormsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def viewing_form_params
-      params.require(:viewing_form).permit(:program_title, :ingest_date, :aspect_ratio, :program_id, :tx_date, :number_of_parts, parts_attributes: [:id, :start, :finish, :duration, :notes, :_destroy])
+      params.require(:viewing_form).permit(:program_title, :contact_number, :ingest_date, :aspect_ratio, :program_id, :tx_date, :number_of_parts, parts_attributes: [:id, :start, :finish, :duration, :notes])
     end
 end
