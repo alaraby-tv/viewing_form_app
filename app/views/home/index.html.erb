@@ -1,13 +1,13 @@
 <div id="BtnsDiv">
-  <div class="row justify-content-md-center">
-    <h5>Welcome <%= current_user.full_name %>, please select one option below</h5> 
+  <div class="row justify-content-center">
+    <h1>Welcome!</h1> 
   </div>
   <div class="row">
     <div class="col">
-      <%= link_to 'Viewing Form', new_viewing_form_path, class: 'btn btn-info btn-lg btn-block' %>
+      <%= link_to 'Viewing Forms', viewing_forms_path, class: 'btn btn-info btn-lg btn-block' %>
     </div>
     <div class="col">
-      <%= link_to 'Music Cue', "#", class: 'btn btn-info btn-lg btn-block' %>
+      <%= link_to 'Music Cues', "#", class: 'btn btn-info btn-lg btn-block' %>
     </div>
   </div>
 </div>
