@@ -1,15 +1,3 @@
-// This is a manifest file that'll be compiled into application.js, which will include all the files
-// listed below.
-//
-// Any JavaScript/Coffee file within this directory, lib/assets/javascripts, or any plugin's
-// vendor/assets/javascripts directory can be referenced here using a relative path.
-//
-// It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
-// compiled file. JavaScript code in this file should be added after the last require_* statement.
-//
-// Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
-// about supported directives.
-//
 //= require rails-ujs
 //= require activestorage
 //= require turbolinks
@@ -20,7 +8,7 @@
 //= require alertify
 //= require alertify/confirm-ujs
 //= require popper
-//= require bootstrap-datepicker
+//= require bootstrap-datepicker/core
 //= require bootstrap-sprockets
 //= require cocoon
 
@@ -29,7 +17,8 @@ var framerate = 25;
 var NoOfPartsSelector = 0;
 var ProgLogoUrl = "https://drive.google.com/uc?id=1qfL8SdBC_2Bu7_8kmp55rqLYXN8btNGj&export=download";
 
-var TimeCodePattern = new RegExp("([0-9][0-9]):([0-5][0-9]):([0-5][0-9]):([0-2][0-4])");
+var TimeCodePattern = /^\d{2}:\d{2}:\d{2}:([01]\d|2[0-4])$/;
+//var TimeCodePattern = new RegExp("(2[0-3]|1[0-9]|[01][0-9]):([0-5][0-9]):([0-5][0-9]):([01][0-9]|1[0-9]|2[0-4])");
 
 
 // Email preparation parameters
@@ -85,8 +74,6 @@ $(document).on('turbolinks:load', function() {
 
   // Load the list of programes
   LoadProgList(ProgLogosList);
-  // then style it to the custom select
-  
 
   //ViewingFormTitle
   //
@@ -108,23 +95,47 @@ $(document).on('turbolinks:load', function() {
       $("#ProgTitle").attr('readonly', true);
     }
 
-
   });
 
-  $('#remove_association').hide();
+  // Dissable link to remove parts on window load
+  if ($('#NoOfParts').val($('.nested-fields').length) == 0) {
+    $('.li_1').addClass('d-none');
+    $('.li_2').removeClass('d-none');
+  } else {
+    $('.li_1').removeClass('d-none');
+    $('.li_2').addClass('d-none');
+  }
 
   // adding part fields with cocoon
   $('.parts').on('cocoon:after-insert', function(e, inserted_item) {
-    var num = $('.nested-fields').length;
-    $(inserted_item).wrap("<div class='Titled-row' id='Row" + num + "'></div>")
-    $("<div id='RowTitle'><h5> Part: " + num + "</h5></div>").prependTo(inserted_item);
-    $('#NoOfParts').val(num);
-    $(inserted_item).find('input.in').prop('id', "Row" + num + "IN");
-    $(inserted_item).find('input.out').prop('id', "Row" + num + "OUT");
-    $(inserted_item).find('input.dur').prop('id', "Row" + num + "DUR");
-    $(inserted_item).find('textarea.notes').prop('id', "Row" + num + "Notes");
-
-    $('#remove_association').show();
+    var RowNo = $('.nested-fields').length;
+    $(inserted_item).wrap("<div class='Titled-row' id='Row" + RowNo + "'></div>")
+    $("<div id='RowTitle'><h5> Part: " + RowNo + "</h5></div>").prependTo(inserted_item);
+    $('#NoOfParts').val(RowNo).removeClass("is-invalid").addClass('is-valid');
+    // $('#NoOfParts').removeClass("is-invalid");
+    // $('#NoOfParts').addClass('is-valid');
+    $(inserted_item).find('input.in').prop('id', "Row" + RowNo + "IN");
+    $(inserted_item).find('input.out').prop('id', "Row" + RowNo + "OUT");
+    $(inserted_item).find('input.dur').prop('id', "Row" + RowNo + "DUR");
+    $(inserted_item).find('textarea.notes').prop('id', "Row" + RowNo + "Notes");
+    
+    // Enable link to remove parts when parts available
+    if (RowNo > 0) {
+      $('.li_1').addClass('d-none');
+      $('.li_2').removeClass('d-none');
+    }
+    // Insert value to IN field of newly added parts 
+    if (RowNo > 1) {
+      var prevRowID = "Row" + (RowNo - 1);
+      var prevOUTpart = document.getElementById(prevRowID + "OUT").value;
+      var prevDURpart = document.getElementById(prevRowID + "DUR").value;
+      if (prevDURpart !== 'Invalid Timecodes' && prevOUTpart !== '' && isValidTimeCode(prevOUTpart) === true) {
+        var newOUTpart = frames_to_timecode(timecode_to_frames(prevOUTpart) + 1);
+        $("#Row" + RowNo + "IN").val(newOUTpart);
+      } else {
+        $("#Row" + RowNo + "IN").val("");   
+      }
+    }
   });
 
   // removing part fields
@@ -132,72 +143,96 @@ $(document).on('turbolinks:load', function() {
     var num = $('.nested-fields').length;
     $('#Row' + num).remove();
     $('#NoOfParts').val(num - 1);
-    if (num - 1 == 0) {
-      $('#remove_association').hide();
+    // Dissable link to remove parts when parts unavailable
+    if (num <= 1) {
+      $('.li_1').removeClass('d-none');
+      $('.li_2').addClass('d-none');
+      $('#NoOfParts').removeClass("is-valid").addClass('is-invalid');
     }
   });
 
-
-  $('#PrintFormBtn').click(function() {
+  $('#PrintFormBtn').on('click', function() {
     window.print();
-
   });
 
-  $("#ViewingForm").on('mouseover', '.calc', function() {
-    $('.calc').change(function() {
-      //console.log(1);
-      var sourceID = $(this).prop("id");
+  $('#sendForm').click(function(e) {
+    if (!isValidInputs()) {
+      e.preventDefault();
+    }
+  });
 
+  $('.main-form-part .form-control').on('change', function() {
+    var field_value = $(this).val();
+    // console.log(field_value);
+    if (field_value === '') {
+      $(this).removeClass("is-valid");
+      $(this).toggleClass("is-invalid");
+    } else {
+      $(this).removeClass("is-invalid");
+      $(this).addClass('is-valid');
+    }
+  });
+  
+  $(".parts").on('mouseenter', '.calc', function() {
+    //console.log("entered");
+    //console.log($(this).prop('id'));
+    $(this).on('change', function() {
+
+      var sourceID = $(this).prop("id");
       var RowNo = sourceID.substring(0, 4);
       var currentRow = parseInt(RowNo.substr(RowNo.length - 1));
-      //console.log(RowNo);
 
-      //$('.calc').each(function() {
       var INpart = document.getElementById(RowNo + "IN").value;
       var OUTpart = document.getElementById(RowNo + "OUT").value;
 
-      //console.log(isValidTimeCode(INpart, RowNo + "IN") === false);
-      if (isValidTimeCode(INpart, RowNo + "IN") === false || isValidTimeCode(OUTpart, RowNo + "OUT") === false) {
+      if (isValidTimeCode(INpart) === false || isValidTimeCode(OUTpart) === false) {
 
-        if (isValidTimeCode(INpart, RowNo + "IN") === false) {
-          document.getElementById("Row" + (currentRow) + "IN").style.borderColor = "red";
+        if (isValidTimeCode(INpart) === false) {
+          $("#Row" + (currentRow) + "IN").removeClass('is-valid');
+          $("#Row" + (currentRow) + "IN").addClass("is-invalid");
         } else {
-          document.getElementById("Row" + (currentRow) + "IN").style.borderColor = "white";
+          $("#Row" + (currentRow) + "IN").removeClass('is-invalid');
+          $("#Row" + (currentRow) + "IN").addClass('is-valid');
         }
 
-        if (isValidTimeCode(OUTpart, RowNo + "OUT") === false) {
-
-          document.getElementById("Row" + (currentRow) + "OUT").style.borderColor = "red";
+        if (isValidTimeCode(OUTpart) === false) {
+          $("#Row" + (currentRow) + "OUT").removeClass('is-valid');
+          $("Row" + (currentRow) + "OUT").addClass('is-invalid');
         } else {
-          document.getElementById("Row" + (currentRow) + "OUT").style.borderColor = "white";
+          $("#Row" + (currentRow) + "OUT").removeClass('is-invalid');
+          $("Row" + (currentRow) + "OUT").addClass('is-valid');
         }
       } else {
-        document.getElementById("Row" + (currentRow) + "IN").style.borderColor = "white";
-        document.getElementById("Row" + (currentRow) + "OUT").style.borderColor = "white";
-
-        var DURpart = CalcDur(INpart, OUTpart);
-        if (DURpart === "Invalid Timecodes") {
-          $('#' + RowNo + "DUR").val(DURpart);
-          document.getElementById(RowNo + "DUR").style.borderColor = "red";
-          $("#" + RowNo + "DUR").addClass('input:invalid');
-
-        } else {
-          $('#' + RowNo + "DUR").val(DURpart);
-          document.getElementById(RowNo + "DUR").style.borderColor = "white";
-          $("#" + RowNo + "DUR").removeClass('input:invalid');
-
-        }
-
+        $("#Row" + (currentRow) + "IN").removeClass('is-invalid');
+        $("#Row" + (currentRow) + "IN").addClass('is-valid');
+        $("#Row" + (currentRow) + "OUT").removeClass('is-invalid');
+        $("#Row" + (currentRow) + "OUT").addClass('is-valid');
       }
 
+      var DURpart = CalcDur(INpart, OUTpart);
+
+      if (DURpart === "Invalid Timecodes") {
+        $('#' + RowNo + "DUR").val(DURpart);
+        alertify.error('OUT-timecode must be greater than the IN-timecode');
+        $("#" + RowNo + "OUT").removeClass('is-valid');
+        $('#' + RowNo + "OUT").addClass('is-invalid');
+        $("#" + RowNo + "DUR").removeClass('is-valid');
+        $('#' + RowNo + "DUR").addClass('is-invalid');
+      } else {
+        $('#' + RowNo + "DUR").val(DURpart);
+        $("#" + RowNo + "OUT").removeClass('is-invalid');
+        $('#' + RowNo + "OUT").addClass('is-valid');
+        $("#" + RowNo + "DUR").removeClass('is-invalid');
+        $('#' + RowNo + "DUR").addClass('is-valid');
+      }
 
       //to be used in setting the value of the timecode of the next part
       var nextRowID = "Row" + (currentRow + 1);
       // Update the number of chosen parts.
       var NoOfParts = document.getElementById("NoOfParts").value;
       if (NoOfParts > 1) {
-        if ($("#" + nextRowID).length != 0 && $("#" + nextRowID).is(':visible')) {
-          if (OUTpart !== '' && isValidTimeCode(OUTpart, RowNo + "OUT") === true) {
+        if ($("#" + nextRowID).length !== 0) {
+          if (OUTpart !== '' && isValidTimeCode(OUTpart) === true) {
             var newOUTpart = frames_to_timecode(timecode_to_frames(OUTpart) + 1);
             $("#" + nextRowID + "IN").val(newOUTpart);
           } else {
@@ -206,22 +241,21 @@ $(document).on('turbolinks:load', function() {
             $("#" + RowNo + "DUR").val("");
           }
         }
-      } else if (OUTpart === '' || isValidTimeCode(OUTpart, RowNo + "OUT") === false) {
+      }
+
+      if (OUTpart === '' || (isValidTimeCode(OUTpart) === false)) {
         $("#" + RowNo + "DUR").val("");
       }
-      //  });
     });
   });
-
 });
-
 
 function LoadProgList(ProgLogosList) {
   var sel = document.getElementById('ProgramTitleOption');
 
   for (var progTitle in ProgLogosList) {
-
     var opt = document.createElement('option');
+
     opt.innerHTML = progTitle;
     opt.value = progTitle;
     sel.appendChild(opt);
@@ -232,19 +266,9 @@ function FormatNumber(n) {
   return n > 9 ? "" + n : "0" + n;
 }
 
-function HideAllParts(allItems) {
-  for (var i = 0; i < allItems; i++) {
-    var id = "#Row" + (i + 1);
-    if ($(id).length != 0) {
-      $(id).hide();
-    }
-  }
-}
-
-
-function isValidTimeCode(timecode, inputID) {
+function isValidTimeCode(timecode) { 
   // test the input value against the Input Pattern Specified.
-  return (TimeCodePattern.test(timecode) && document.getElementById(inputID).validity.valid);
+  return (TimeCodePattern.test(timecode));
 }
 
 function isValidInputs() {
@@ -259,128 +283,185 @@ function isValidInputs() {
   ProgID = document.getElementById('ProgID').value;
   TXDate = document.getElementById('TXDate').value;
   NoOfParts = document.getElementById('NoOfParts').value;
+  AspectRatio = document.getElementById('AspectRatio').value;
 
-  var ErrorMsg = "Error: Check the inputs of th efollowing fields: <br />";
+  // var ErrorMsg = "Error: Check the inputs of th efollowing fields: <br />";
 
   if (ProgTitle === '') {
     isAllValid = false;
-    ErrorMsg += "      * Programme Title should not be Empty. <br />";
+    // ErrorMsg += "      * Programme Title should not be Empty. <br />";
     alertify.error('Programme Title should not be Empty.');
-    document.getElementById("ProgTitle").style.borderColor = "red";
+    $("#ProgTitle").removeClass("is-valid");
+    $("#ProgTitle").addClass("is-invalid");
   } else {
-    document.getElementById("ProgTitle").style.borderColor = "white";
+    $("#ProgTitle").removeClass("is-invalid");
+    $("#ProgTitle").addClass('is-valid');
+  }
+  if (senderName === '') {
+    isAllValid = false;
+    // ErrorMsg += "      * Name should not be Empty. <br />";
+    alertify.error('Name should not be empty.');
+    $("#senderName").removeClass("is-valid");
+    $("#senderName").addClass("is-invalid");
+  } else {
+    $("#senderName").removeClass("is-invalid");
+    $("#senderName").addClass('is-valid');
+  }
+  if (senderEmail === '') {
+    isAllValid = false;
+    // ErrorMsg += "      * Email should not be Empty. <br />";
+    alertify.error('Email should not be empty.');
+    $("#senderEmail").removeClass("is-valid");
+    $("#senderEmail").addClass("is-invalid");
+  } else {
+    $("#senderEmail").removeClass("is-invalid");
+    $("#senderEmail").addClass('is-valid');
   }
   if (IngestDate === '') {
     isAllValid = false;
-    ErrorMsg += "      * Ingest Date should be chosen. <br />";
+    // ErrorMsg += "      * Ingest Date should be chosen. <br />";
     alertify.error('Ingest Date should be chosen.');
-    document.getElementById("IngestDate").style.borderColor = "red";
+    $("#IngestDate").removeClass("is-valid");
+    $("#IngestDate").addClass("is-invalid");
   } else {
-    document.getElementById("IngestDate").style.borderColor = "white";
+    $("#IngestDate").removeClass("is-invalid");
+    $("#IngestDate").addClass('is-valid');
   }
   if (TodayDate === '') {
     isAllValid = false;
-    ErrorMsg += "      * Today Date should be chosen. <br />";
+    // ErrorMsg += "      * Today Date should be chosen. <br />";
     alertify.error('Today Date should be chosen.');
-    document.getElementById("TodayDate").style.borderColor = "red";
+    $("#TodayDate").removeClass("is-valid");
+    $("#TodayDate").addClass("is-invalid");
   } else {
-    document.getElementById("TodayDate").style.borderColor = "white";
+    $("#TodayDate").removeClass("is-invalid");
+    $("#TodayDate").addClass('is-valid');
   }
   if (ContactNo === '') {
     isAllValid = false;
-    ErrorMsg += "      * Contact number should not be Empty. <br />";
+    // ErrorMsg += "      * Contact number should not be Empty. <br />";
     alertify.error('Contact number should not be Empty.');
-
-    document.getElementById("ContactNo").style.borderColor = "red";
+    $("#ContactNo").removeClass("is-valid");
+    $("#ContactNo").addClass("is-invalid");
   } else {
-    document.getElementById("ContactNo").style.borderColor = "white";
+    $("#ContactNo").removeClass("is-invalid");
+    $("#ContactNo").addClass('is-valid');
+  }
+  if (AspectRatio === '') {
+    isAllValid = false;
+    // ErrorMsg += "      * Aspect Ratio should not be Empty. <br />";
+    alertify.error('Aspect Ratio should not be Empty.');
+    $("#AspectRatio").removeClass("is-valid");
+    $("#AspectRatio").addClass("is-invalid");
+  } else {
+    $("#AspectRatio").removeClass("is-invalid");
+    $("#AspectRatio").addClass('is-valid');
   }
   if (ProgID === '') {
     isAllValid = false;
-    ErrorMsg += "      * Programme ID should not be Empty. <br />";
+    // ErrorMsg += "      * Programme ID should not be Empty. <br />";
     alertify.error('Programme ID should not be Empty.');
-    document.getElementById("ProgID").style.borderColor = "red";
+    $("#ProgID").removeClass("is-valid");
+    $("#ProgID").addClass("is-invalid");
   } else {
-    document.getElementById("ProgID").style.borderColor = "white";
+    $("#ProgID").removeClass("is-invalid");
+    $("#ProgID").addClass('is-valid');
   }
   if (TXDate === '') {
     isAllValid = false;
-    ErrorMsg += "      * TX Date should be chosen. <br />";
+    // ErrorMsg += "      * TX Date should be chosen. <br />";
     alertify.error('TX Date should be chosen.');
-    document.getElementById("TXDate").style.borderColor = "red";
+    $("#TXDate").removeClass("is-valid");
+    $("#TXDate").addClass("is-invalid");
   } else {
-    document.getElementById("TXDate").style.borderColor = "white";
+    $("#TXDate").removeClass("is-invalid");
+    $("#TXDate").addClass('is-valid');
+  }
+  if (NoOfParts === '0') {
+    isAllValid = false;
+    // ErrorMsg += "      * At least one part needs to be added. <br />";
+    alertify.error('At least one part needs to be added.');
+    $("#NoOfParts").removeClass("is-valid");
+    $("#NoOfParts").addClass("is-invalid");
+  } else {
+    $("#NoOfParts").removeClass("is-invalid");
+    $("#NoOfParts").addClass('is-valid');
   }
 
   // Check the inputs of the parts
   for (var i = 1; i <= NoOfParts; i++) {
-    var id = "#Row" + (i);
-    if ($(id).length != 0 && $(id).is(':visible')) {
+    var id = "#Row" + i;
+    if ($(id).length !== 0 ) {
       // If the part exists and not hidden
       var INpart = document.getElementById("Row" + (i) + "IN").value;
       var OUTpart = document.getElementById("Row" + (i) + "OUT").value;
       var DURpart = document.getElementById("Row" + (i) + "DUR").value;
       var Notes = document.getElementById("Row" + (i) + "Notes").value;
 
-      // console.log(isValidTimeCode(OUTpart, "Row" + (i) + "OUT"));
-      // console.log(TimeCodePattern.test(OUTpart));
-      // console.log(document.getElementById("Row" + (i) + "OUT").validity.valid)
-      // //TimeCodePattern.test(OUTpart) && document.getElementById(inputID).validity.valid)
-
       if (INpart === '') {
         isAllValid = false;
-        ErrorMsg += "      * Part " + i + "-IN timecode should not be Empty. <br />";
+        // ErrorMsg += "      * Part " + i + "-IN timecode should not be Empty. <br />";
         alertify.error('Part ' + i + '-IN timecode should not be Empty.');
-        document.getElementById("Row" + (i) + "IN").style.borderColor = "red";
-      } else if (isValidTimeCode(INpart, "Row" + (i) + "IN") === false) {
+        $("#Row" + (i) + "IN").removeClass("is-valid");
+        $("#Row" + (i) + "IN").addClass("is-invalid");
+      } else if (isValidTimeCode(INpart) === false) {
         isAllValid = false;
-        ErrorMsg += "      * Part " + i + "-IN timecode is invalid <br />";
+        // ErrorMsg += "      * Part " + i + "-IN timecode is invalid <br />";
         alertify.error('Part ' + i + '-IN timecode is invalid.');
-        document.getElementById("Row" + (i) + "IN").style.borderColor = "red";
+        $("#Row" + (i) + "IN").removeClass("is-valid");
+        $("#Row" + (i) + "IN").addClass("is-invalid");
       } else {
-        document.getElementById("Row" + (i) + "IN").style.borderColor = "white";
+        $("#Row" + (i) + "IN").removeClass("is - invalid");
+        $("#Row" + (i) + "IN").addClass('is-valid');
       }
       if (OUTpart === '') {
         isAllValid = false;
-        ErrorMsg += "      * Part " + i + "-OUT timecode should not be Empty. <br />";
+        // ErrorMsg += "      * Part " + i + "-OUT timecode should not be Empty. <br />";
         alertify.error('Part ' + i + '-OUT timecode should not be Empty.');
-        document.getElementById("Row" + (i) + "OUT").style.borderColor = "red";
-      } else if (isValidTimeCode(OUTpart, "Row" + (i) + "OUT") === false) {
+        $("#Row" + (i) + "OUT").removeClass("is-valid");
+        $("#Row" + (i) + "OUT").addClass("is-invalid");
+      } else if (isValidTimeCode(OUTpart) === false) {
         isAllValid = false;
-        ErrorMsg += "      * Part " + i + "-OUT timecode is invalid <br />";
+        // ErrorMsg += "      * Part " + i + "-OUT timecode is invalid <br />";
         alertify.error('Part ' + i + '-OUT timecode is invalid.');
-        document.getElementById("Row" + (i) + "OUT").style.borderColor = "red";
+        $("#Row" + (i) + "OUT").removeClass("is-valid");
+        $("#Row" + (i) + "OUT").addClass("is-invalid");
       } else {
-        document.getElementById("Row" + (i) + "OUT").style.borderColor = "white";
+        $("#Row" + (i) + "OUT").removeClass("is - invalid");
+        $("#Row" + (i) + "OUT").addClass('is-valid');
       }
 
       if (DURpart === '') {
         isAllValid = false;
-        ErrorMsg += "      * Part " + i + "-DUR timecode should not be Empty. <br />";
+        // ErrorMsg += "      * Part " + i + "-DUR timecode should not be Empty. <br />";
         alertify.error('Part ' + i + '-DUR timecode should not be Empty.');
-        document.getElementById("Row" + (i) + "DUR").style.borderColor = "red";
-      } else if (isValidTimeCode(OUTpart, "Row" + (i) + "DUR") === false) {
+        $("#Row" + (i) + "DUR").removeClass("is-valid");
+        $("#Row" + (i) + "DUR").addClass("is-invalid");
+      } else if (isValidTimeCode(DURpart) === false) {
         isAllValid = false;
-        ErrorMsg += "      * Part " + i + "-DUR timecode is invalid <br />";
+        // ErrorMsg += "      * Part " + i + "-DUR timecode is invalid <br />";
         alertify.error('Part ' + i + '-DUR timecode is invalid.');
-        document.getElementById("Row" + (i) + "DUR").style.borderColor = "red";
+        $("#Row" + (i) + "DUR").removeClass("is-valid");
+        $("#Row" + (i) + "DUR").addClass("is-invalid");
       } else if (DURpart === "Invalid Timecodes") {
         isAllValid = false;
         alertify.error('Part ' + i + ' OUT-timecode must be greater than the IN-timecode');
-        document.getElementById("Row" + (i) + "DUR").style.borderColor = "red";
+        $("#Row" + (i) + "DUR").removeClass("is-valid");
+        $("#Row" + (i) + "DUR").addClass("is-invalid");
       } else {
-        document.getElementById("Row" + (i) + "DUR").style.borderColor = "white";
+        $("#Row" + (i) + "DUR").removeClass("is-invalid");
+        $("#Row" + (i) + "DUR").addClass('is-valid');
       }
     }
   }
 
-  $("#errorMsg").html(ErrorMsg + "</p>");
+  // $("#errorMsg").html(ErrorMsg + "</p>");
 
-  if (isAllValid == false) {
-    $("#errorMsgDiv").show().delay(10000).fadeOut();
-  } else {
+  // if (isAllValid == false) {
+  //   $("#errorMsgDiv").show().delay(10000).fadeOut();
+  // } else {
     return isAllValid;
-  }
+  // }
 }
 
 
@@ -409,7 +490,6 @@ function frames_to_timecode(frames) {
 function CalcDur(INpart, OUTpart) {
   if (INpart !== '' && OUTpart !== '') {
     if (timecode_to_frames(OUTpart) < timecode_to_frames(INpart)) {
-      //alertify.error('OUT-timecode must be greater than the IN-timecode');
       return "Invalid Timecodes";
     } else {
       return frames_to_timecode(timecode_to_frames(OUTpart) - timecode_to_frames(INpart));
@@ -418,56 +498,3 @@ function CalcDur(INpart, OUTpart) {
     event.value = "";
   }
 }
-
-// duration calculation
-// var framerate = 24;
-// var time1 = "";
-// var time2 = "";
-// var target;
-
-// function valueOfFirstField(input) {
-//   validateFormat(input)
-//   time1 = $(input).val();
-//   target = $(input).closest('div').next().next().find('.duration');
-//   calculateDuration(time1, time2, target);
-// }
-
-// function valueOfSecondField(input) {
-//   validateFormat(input)
-//   time2 = $(input).val();
-//   target = $(input).closest('div').next().find('.duration');
-//   calculateDuration(time1, time2, target);
-// }
-
-// function calculateDuration(input1, input2, event) {
-//   if (input1 != "" && input2 != "") {
-//     event.val(frames_to_timecode(timecode_to_frames(input2) - timecode_to_frames(input1)));
-//   } else {
-//     event.val("");
-//   }
-// }
-
-// function timecode_to_frames(timecode) {
-//   var a = timecode.split(':');
-//   return ((Number(a[0])*3600 + Number(a[1])*60 + Number(a[2]))*framerate + Number(a[3]));
-// }
-
-// function frames_to_timecode(frames) {
-//   var hh = Math.floor(frames / (3600 * framerate));
-//   var mm = Math.floor((frames / (60 * framerate)) % 60);
-//   var ss = Math.floor((frames / framerate) % 60);
-//   var ff = frames % framerate;
-//   var result = hh.toString().padStart(2, "0") + ":" + mm.toString().padStart(2, "0") + ":" + ss.toString().padStart(2, "0") + ":" + ff.toString().padStart(2, "0");
-//   return result;
-// }
-
-// function validateFormat(input) {
-//   var wrongFormatMessage = "The format of this input must be '00:00:00:00'";
-//   var format = /^\d{2}:\d{2}:\d{2}:([01]\d|2[0-4])$/;
-//   var inputValue = $(input).val();
-
-//   if(!inputValue.match(format)) {
-//     $(input).val('');
-//     alert(wrongFormatMessage);
-//   } 
-// }
