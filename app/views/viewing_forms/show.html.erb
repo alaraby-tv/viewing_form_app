@@ -1,91 +1,98 @@
-<p id="notice"><%= notice %></p>
-
 <div id="ViewingForm">
   <div id="ViewingFormTitle">
     <h5><%= @viewing_form.program_title.upcase %> Viewing Form</h5>
   </div>
 
-  <div class="row">
-    <div class="col">
-      <div class="row">
-        <p>Name : </p>
-        <%= @viewing_form.user.full_name %>
+  <div class="main-form-part">
+    <div class="row">
+      <div class="col">
+        <div class="row-in">
+          <%= label_tag 'name', nil, class: 'col-30' %>
+          <%= text_field_tag 'senderName', @viewing_form.user.full_name, readonly: true, class: "col-70 form-control" %>
+        </div>
+        <div class="row-in">
+          <%= label_tag 'email', nil, class: 'col-30' %>
+          <%= email_field_tag 'senderEmail', @viewing_form.user.email, readonly: true, class: "col-70 form-control" %>
+        </div>
+        <div class="row-in">
+          <%= label_tag 'Contact No', nil, class: 'col-30' %>
+          <%= text_field_tag 'Contact No', @viewing_form.contact_number, readonly: true, class: "col-70 form-control" %>
+        </div>
+        <div class="row-in">
+          <%= label_tag 'Ingest Date', nil, class: 'col-30' %>
+          <%= text_field_tag 'Ingest Date', @viewing_form.ingest_date.to_date, readonly: true, class: "col-70 form-control" %>
+        </div>
+        <div class="row-in">
+          <%= label_tag 'Aspect Ratio', nil, class: 'col-30' %>
+          <%= text_field_tag 'Aspect Ration', @viewing_form.aspect_ratio, readonly: true, class: "col-70 form-control" %>
+        </div>
       </div>
-      <div class="row">
-        <p>Email : </p>
-        <%= @viewing_form.user.email %>
-      </div>
-      <div class="row">
-        <p>Contact No : </p>
-        <%= @viewing_form.contact_number %>
-      </div>
-      <div class="row">
-        <p>Ingest Date : </p>
-        <%= @viewing_form.ingest_date.to_date %>
-      </div>
-      <div class="row">
-        <p>Aspect Ratio : </p>
-        <%= @viewing_form.aspect_ratio %>
-      </div>
-    </div>
-    <div class="col">
-      <div class="row">
-        <p>Date : </p>
-        <%= @viewing_form.created_at.to_date %>
-      </div>
-      <div class="row">
-        <p>Program Title : </p>
-        <%= @viewing_form.program_title %>
-      </div>
-      <div class="row">
-        <p>Program ID : </p>
-        <%= @viewing_form.program_id %>
-      </div>
-      <div class="row">
-        <p>TX Date : </p>
-        <%= @viewing_form.tx_date.to_date %>
-      </div>
-      <div class="row">
-        <p>No of Parts : </p>
-        <%= @viewing_form.number_of_parts %>
+      <div class="col">
+        <div class="row-in">
+          <%= label_tag 'date', nil, class: 'col-30' %>
+          <%= text_field_tag 'date', @viewing_form.created_at.to_date, readonly: true, class: "col-70 form-control" %>
+        </div>
+        <div class="row-in">
+          <%= label_tag 'Program Title', nil, class: 'col-30' %>
+          <%= text_field_tag 'Program Title', @viewing_form.program_title, readonly: true, class: "col-70 form-control" %>
+        </div>
+        <div class="row-in">
+          <%= label_tag 'Program ID', nil, class: 'col-30' %>
+          <%= text_field_tag 'Program ID', @viewing_form.program_id, readonly: true, class: "col-70 form-control" %>
+        </div>
+        <div class="row-in">
+          <%= label_tag 'TX Date', nil, class: 'col-30' %>
+          <%= text_field_tag 'TX Date', @viewing_form.tx_date.to_date, readonly: true, class: "col-70 form-control" %>
+        </div>
+        <div class="row-in">
+          <%= label_tag 'No of Parts', nil, class: 'col-30' %>
+          <%= text_field_tag 'No of Parts', @viewing_form.aspect_ratio, readonly: true, class: "col-70 form-control" %>
+        </div>
       </div>
     </div>
   </div>
 
   <!-- Parts Info -->
   <div class="parts">
-    <div class='Titled-row'>
-      <% @viewing_form.parts.each_with_index do |part, i| %>
-      <div id='RowTitle'>
-        <h3> Part: <%= i + 1 %></h3>
-      </div>
+    <% @viewing_form.parts.each_with_index do |part, i| %>
+      <div class='Titled-row'>
+        <div id="RowTitle">
+          <h3> Part: <%= i + 1 %></h3>
+        </div>
         <div class="row">
           <div class="col">
-            <div class="row">
-              <p>IN : </p>
-              <%= part.start %>
+            <div class="row-in">
+              <%= label_tag 'IN', nil, class: 'col-30' %>
+              <%= text_field_tag 'IN', part.start, readonly: true, class: "col-70 form-control" %>
             </div>
-            <div class="row">
-              <p>OUT : </p>
-              <%= part.finish %>
+            <div class="row-in">
+              <%= label_tag 'OUT', nil, class: 'col-30' %>
+              <%= text_field_tag 'OUT', part.finish, readonly: true, class: "col-70 form-control" %>
             </div>
-            <div class="row">
-              <p>DUR : </p>
-              <%= part.duration %>
+            <div class="row-in">
+              <%= label_tag 'DUR', nil, class: 'col-30' %>
+              <%= text_field_tag 'PDUR', part.duration, readonly: true, class: "col-70 form-control" %>
             </div>
           </div>
           <div class="col">
             <div class="comments-row">
-              <div class="row">
-                <p>Notes : </p>
-                <%= part.notes %>
-              </div>
+              <%= label_tag :notes, nil, class: 'col-3' %>
+              <%= text_area_tag :notes, nil, rows: 3, cols: 50, readonly: true, class: 'notes form-control' %>
+            </div>
           </div>
         </div>
-      <% end %>
+      </div>
+    <% end %>
+  </div>
+  <hr>
+  <div id="BtnsDiv">
+    <div class="row">
+      <input type="submit" name="commit" value="Print Form" onclick="window.print()" id="PrintFormBtn" class='btn btn-block btn-lg btn-info' data-disable-with="Print Form">
     </div>
-  </div> 
+  </div>
 </div>
-
-<%= link_to 'Edit', edit_viewing_form_path(@viewing_form) %> |
-<%= link_to 'Back', viewing_forms_path %>
+<div class="row justify-content-center">
+  <%= link_to viewing_forms_path do %>
+    <i class="bi bi-backspace"></i>
+  <% end %>
+</div>
