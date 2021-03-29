@@ -18,13 +18,14 @@ gem 'bootstrap', '~> 4.0.0'
 gem 'bootstrap-datepicker-rails'
 gem 'jquery-rails'
 gem 'alertifyjs-rails'
-gem 'will_paginate', '~> 3.1.0'
-gem 'will_paginate-bootstrap4'
+gem 'kaminari'
+gem 'bootstrap4-kaminari-views'
 gem 'cocoon'
 
 gem 'devise'
 gem 'devise_invitable', '~> 2.0.0'
 gem 'devise-bootstrap-views', '~> 1.0'
+gem "administrate"
 
 gem 'bootsnap', '>= 1.1.0', require: false
 
