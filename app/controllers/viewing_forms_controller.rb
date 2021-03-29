@@ -7,7 +7,7 @@ class ViewingFormsController < ApplicationController
     if current_user.admin?
       @viewing_forms = ViewingForm.order('created_at DESC').page(params[:page]).per(5)
     else
-      @viewing_forms = current_user.viewing_forms.order('created_at DESC').page(params[:page]).per(10)
+      @viewing_forms = current_user.viewing_forms.order('created_at DESC').page(params[:page])
     end
   end
 

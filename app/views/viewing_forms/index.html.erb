@@ -42,9 +42,7 @@
       <p  style="color: #c19a68"><%= page_entries_info @viewing_forms, entry_name: 'form' %></p>
     </div>
     <div class="col">
-      <%= paginate @viewing_forms, window: 2, first: nil, last: nil, theme: 'twitter-bootstrap-4',
-                   pagination_class: "pagination-sm justify-content-end",
-                   nav_class: "d-inline-b" %>
+      <%= paginate @viewing_forms, window: 2 %>
     </div>
   </div>
 </div>

@@ -19,7 +19,6 @@ gem 'bootstrap-datepicker-rails'
 gem 'jquery-rails'
 gem 'alertifyjs-rails'
 gem 'kaminari'
-gem 'bootstrap4-kaminari-views'
 gem 'cocoon'
 
 gem 'devise'

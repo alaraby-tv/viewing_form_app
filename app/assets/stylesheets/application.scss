@@ -84,6 +84,13 @@ a:hover {
   border-color: #18a2b8;
 }
 
+.page-link.disabled {
+  color: #ccc;
+  background-color: #eee;
+  border-color: #dee2e6;
+  cursor: no-drop;
+}
+
 #Header {
   background-color: #08375d;
   width: 100%;
