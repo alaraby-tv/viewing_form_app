@@ -31,3 +31,13 @@
 
 en:
   hello: "Hello world"
+  views:
+    pagination:
+      first: "&laquo;"
+      previous: "prev"
+      next: "next"
+      last: "&raquo;"
+  helpers:
+    page_entries_info:
+      more_pages:
+        display_entries: "Displaying <b>%{first}&nbsp;-&nbsp;%{last}</b> %{entry_name} of <b>%{total}</b> in total"
