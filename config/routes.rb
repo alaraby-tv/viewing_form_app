@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+  namespace :admin do
+      resources :users
+      resources :parts
+      resources :viewing_forms
+
+      root to: "users#index"
+    end
   resources :parts
   resources :viewing_forms
   root 'home#index'
