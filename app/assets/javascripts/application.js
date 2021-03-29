@@ -173,9 +173,26 @@ $(document).on('turbolinks:load', function() {
     }
   });
   
-  $(".parts").on('mouseenter', '.calc', function() {
+  $(".parts").on('focus', '.calc', function() {
     //console.log("entered");
     //console.log($(this).prop('id'));
+    var timeCode = $(this); //Get all elements with class "calc"
+    for (var i = 0; i < timeCode.length; i++) { //Loop trough elements
+      timeCode[i].addEventListener('keyup', function(e) { //Add event listener to every element
+        var key = e.keyCode || e.which;
+        var reg = /[0-9]|[0-9]:[0-9]|[0-9]:[0-9]:[0-9]|[0-9]:[0-9]:[0-9]:[0-9]/;
+        if ((this.value.length == 2 || this.value.length == 5 || this.value.length == 8) && reg.test(this.value) && key !== 8) this.value = this.value + ":"; //Add colon 
+        if (this.value.length > 11) this.value = this.value.substr(0, this.value.length - 1); //Delete the last digit if string length > 11
+        if (isValidTimeCode(this.value) === false) {
+          $(this).removeClass('is-valid');
+          $(this).addClass("is-invalid");
+        } else {
+          $(this).removeClass('is-invalid');
+          $(this).addClass('is-valid');
+        }
+      });
+    };
+
     $(this).on('change', function() {
 
       var sourceID = $(this).prop("id");
@@ -184,6 +201,8 @@ $(document).on('turbolinks:load', function() {
 
       var INpart = document.getElementById(RowNo + "IN").value;
       var OUTpart = document.getElementById(RowNo + "OUT").value;
+      console.log(isValidTimeCode(INpart));
+      console.log(isValidTimeCode(OUTpart));
 
       if (isValidTimeCode(INpart) === false || isValidTimeCode(OUTpart) === false) {
 
@@ -197,10 +216,10 @@ $(document).on('turbolinks:load', function() {
 
         if (isValidTimeCode(OUTpart) === false) {
           $("#Row" + (currentRow) + "OUT").removeClass('is-valid');
-          $("Row" + (currentRow) + "OUT").addClass('is-invalid');
+          $("#Row" + (currentRow) + "OUT").addClass('is-invalid');
         } else {
           $("#Row" + (currentRow) + "OUT").removeClass('is-invalid');
-          $("Row" + (currentRow) + "OUT").addClass('is-valid');
+          $("#Row" + (currentRow) + "OUT").addClass('is-valid');
         }
       } else {
         $("#Row" + (currentRow) + "IN").removeClass('is-invalid');
@@ -221,7 +240,6 @@ $(document).on('turbolinks:load', function() {
       } else {
         $('#' + RowNo + "DUR").val(DURpart);
         $("#" + RowNo + "OUT").removeClass('is-invalid');
-        $('#' + RowNo + "OUT").addClass('is-valid');
         $("#" + RowNo + "DUR").removeClass('is-invalid');
         $('#' + RowNo + "DUR").addClass('is-valid');
       }
