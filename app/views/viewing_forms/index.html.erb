@@ -4,7 +4,9 @@
   </div>
   <div class="ButonsDiv">
     <div class="row justify-content-end">
-      <%= link_to 'New Viewing Form', new_viewing_form_path, class: "btn btn-sm btn-info float-right" %>  
+      <div class="col">
+        <%= link_to 'New Viewing Form', new_viewing_form_path, class: "btn btn-sm btn-info float-right" %>  
+      </div> 
     </div>
   </div>
 
@@ -35,5 +37,17 @@
       <% end %>
     </tbody>
   </table>
+  <div class="row">
+    <div class="col">
+      <p style="color: #c19a68"><%= page_entries_info @viewing_forms, :model => '' %></p>
+    </div>
+    <div class="col">
+      <%= will_paginate @viewing_forms,
+        list_classes: %w(pagination pagination-sm justify-content-end),
+        previous_label: '&laquo;',
+        next_label: '&raquo;'
+      %>
+    </div>
+  </div>
 </div>
 

@@ -4,7 +4,11 @@ class ViewingFormsController < ApplicationController
 
   # GET /viewing_forms or /viewing_forms.json
   def index
-    @viewing_forms = ViewingForm.all
+    if current_user.admin?
+      @viewing_forms = ViewingForm.paginate(page: params[:page]).order('created_at DESC')
+    else
+      @viewing_forms = current_user.viewing_forms.paginate(page: params[:page]).order('created_at DESC')
+    end
   end
 
   # GET /viewing_forms/1 or /viewing_forms/1.json

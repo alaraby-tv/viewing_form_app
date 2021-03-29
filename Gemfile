@@ -18,6 +18,8 @@ gem 'bootstrap', '~> 4.0.0'
 gem 'bootstrap-datepicker-rails'
 gem 'jquery-rails'
 gem 'alertifyjs-rails'
+gem 'will_paginate', '~> 3.1.0'
+gem 'will_paginate-bootstrap4'
 gem 'cocoon'
 
 gem 'devise'

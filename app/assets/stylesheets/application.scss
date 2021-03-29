@@ -74,6 +74,16 @@ a:hover {
   text-decoration: none;
 }
 
+.page-link {
+  color: #18a2b8;
+}
+
+.page-item.active .page-link {
+  color: #fff;
+  background-color: #18a2b8;
+  border-color: #18a2b8;
+}
+
 #Header {
   background-color: #08375d;
   width: 100%;
@@ -156,7 +166,7 @@ a:hover {
   margin: auto;
   margin-top: 1%;
   background-color: #f9e9c2;
-  padding-bottom: 2%;
+  // padding-bottom: 2%;
   border: 2px solid #2196F3;
   border-radius: 5px;
 }
@@ -180,7 +190,7 @@ a:hover {
 }
 
 #BtnsDiv {
-  margin: 10px auto;
+  margin: 15px auto;
   width: 60%;
 }
 
