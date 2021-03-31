@@ -1,5 +1,10 @@
-<h1>ViewingForm#send_form</h1>
-
+<p>Hello,</p>
+<br>
 <p>
-  <%= @greeting %>, find me in app/views/viewing_form_mailer/send_form.html.erb
+  <%= @user.full_name %> has sent a Viewing Form for <%= @form.program_title %>. Click <%= link_to "here", viewing_form_url(@form), target: "_blank" %> to view it.
 </p>
+<br>
+<p>Best Regards,</p>
+<p>Alaraby Admin Team</p>
+
+<%= image_tag(attachments['logo.png'].url, width: 50, height: 60) %>

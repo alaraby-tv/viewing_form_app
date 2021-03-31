@@ -1,3 +1,9 @@
-ViewingForm#send_form
+Hello,
 
-<%= @greeting %>, find me in app/views/viewing_form_mailer/send_form.text.erb
+  <%= @user.full_name %> has sent a Viewing Form for <%= @form.program_title %>. To view it please click the link below or copy and paste it into your browser:
+
+  <%= viewing_form_url(@form) %>
+
+Best Regards,
+Alaraby Admin Team
+
