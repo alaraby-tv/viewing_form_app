@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: 'server@ealaraby.tv'
+  default from: 'server@alaraby.tv'
   layout 'mailer'
 end
