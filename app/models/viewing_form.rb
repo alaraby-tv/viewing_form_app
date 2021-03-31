@@ -1,6 +1,6 @@
 class ViewingForm < ApplicationRecord
   belongs_to :user
-  has_many :parts, inverse_of: :viewing_form
+  has_many :parts, inverse_of: :viewing_form, dependent: :destroy
   accepts_nested_attributes_for :parts, reject_if: :reject_parts
 
   def reject_parts(attributes)
