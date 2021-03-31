@@ -1,5 +1,9 @@
 <div id="Header">
+  <% if current_user %>
   <%= link_to image_tag("logo.png", alt: "alaraby_logo", id: "atn_logo"), root_path %>
+  <% else %>
+    <%= image_tag("logo.png", alt: "alaraby_logo", id: "atn_logo") %>
+  <% end %>
   <h2 style="font-family: arial; color:white; text-align:center">Alaraby Viewing Form Application</h2>
   <ul class="nav justify-content-end">
     <li class="nav-item">
