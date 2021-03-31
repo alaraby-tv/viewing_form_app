@@ -1,14 +1,10 @@
 class ViewingFormsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: :show
   before_action :set_viewing_form, only: %i[ show edit update destroy ]
 
   # GET /viewing_forms or /viewing_forms.json
   def index
-    if current_user.admin?
-      @viewing_forms = ViewingForm.order('created_at DESC').page(params[:page]).per(5)
-    else
-      @viewing_forms = current_user.viewing_forms.order('created_at DESC').page(params[:page])
-    end
+    @viewing_forms = scope
   end
 
   # GET /viewing_forms/1 or /viewing_forms/1.json
@@ -30,7 +26,8 @@ class ViewingFormsController < ApplicationController
     @viewing_form = current_user.viewing_forms.build(viewing_form_params)
     respond_to do |format|
       if @viewing_form.save
-        format.html { redirect_to @viewing_form, notice: "Viewing form was successfully created." }
+        ViewingFormMailer.with(user: current_user).send_form(@viewing_form).deliver_now
+        format.html { redirect_to @viewing_form, notice: "Viewing form was sent successfully." }
         format.json { render :show, status: :created, location: @viewing_form }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -62,6 +59,14 @@ class ViewingFormsController < ApplicationController
   end
 
   private
+
+    def scope
+      if current_user.admin?
+        ViewingForm.order('created_at DESC').includes(:parts).page(params[:page])
+      else
+        current_user.viewing_forms.order('created_at DESC').includes(:parts).page(params[:page])
+      end
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_viewing_form
       @viewing_form = ViewingForm.find(params[:id])
