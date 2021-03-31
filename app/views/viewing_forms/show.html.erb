@@ -46,7 +46,7 @@
         </div>
         <div class="row-in">
           <%= label_tag 'No of Parts', nil, class: 'col-30' %>
-          <%= text_field_tag 'No of Parts', @viewing_form.aspect_ratio, readonly: true, class: "col-70 form-control" %>
+          <%= text_field_tag 'No of Parts', @viewing_form.number_of_parts, readonly: true, class: "col-70 form-control" %>
         </div>
       </div>
     </div>
@@ -84,15 +84,19 @@
       </div>
     <% end %>
   </div>
-  <hr>
+  
   <div id="BtnsDiv">
+  <hr>
     <div class="row">
-      <input type="submit" name="commit" value="Print Form" onclick="window.print()" id="PrintFormBtn" class='btn btn-block btn-lg btn-info' data-disable-with="Print Form">
+      <input type="submit" name="commit" onclick="window.print();" value="Print Form"  id="PrintFormBtn" class='btn btn-block btn-lg btn-info' data-disable-with="Print Form">
     </div>
   </div>
 </div>
-<div class="row justify-content-center">
-  <%= link_to viewing_forms_path do %>
-    <i class="bi bi-backspace"></i>
-  <% end %>
-</div>
+<% if current_user %>
+  <div class="row justify-content-center">
+    <%= link_to viewing_forms_path do %>
+      <i class="bi bi-backspace"></i>
+    <% end %>
+  </div>
+<% end %>
+
