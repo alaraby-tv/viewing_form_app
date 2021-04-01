@@ -71,13 +71,13 @@
             </div>
             <div class="row-in">
               <%= label_tag 'DUR', nil, class: 'col-30' %>
-              <%= text_field_tag 'PDUR', part.duration, readonly: true, class: "col-70 form-control" %>
+              <%= text_field_tag 'DUR', part.duration, readonly: true, class: "col-70 form-control" %>
             </div>
           </div>
           <div class="col">
             <div class="comments-row">
-              <%= label_tag :notes, nil, class: 'col-3' %>
-              <%= text_area_tag :notes, nil, rows: 3, cols: 50, readonly: true, class: 'notes form-control' %>
+              <%= label_tag 'Notes', nil, class: 'col-3' %>
+              <%= text_area_tag 'Notes', part.notes, rows: 3, cols: 50, readonly: true, class: 'notes form-control' %>
             </div>
           </div>
         </div>
