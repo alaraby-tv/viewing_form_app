@@ -8,7 +8,7 @@ class ViewingFormMailer < ApplicationMailer
   def send_form(form)
     @user = params[:user]
     @form = form
-    receipients = ['mcringest@alaraby.tv', 'schedulers@alaraby.tv', 'playout@alaraby.tv']
+    receipients = ['mcringest@alaraby.tv', 'schedulers@alaraby.tv', 'playout@alaraby.tv', 'librarians@alaraby.tv']
     
     attachments.inline["logo.png"] = File.read("#{Rails.root}/app/assets/images/logo.png")
 
