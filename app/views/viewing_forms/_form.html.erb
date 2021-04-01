@@ -1,7 +1,7 @@
 <div id="ChooseProg_Div">
   <div class="row">
     <div class="col">
-      <h3 id="Program_Field_Title"> Choose a Program:</h3>
+      <h3 id="Program_Field_Title"> Choose a Programme:</h3>
     </div>
     <div class="col">
       <select name="sources" class="custom-select sources" placeholder="Select a Programme" id="ProgramTitleOption">
@@ -62,12 +62,12 @@
             <%= text_field_tag :date, Date.today , placeholder: "yyyy-mm-dd", readonly: true, id: "TodayDate", class: "col-70 form-control" %>
           </div>
           <div class="row-in">
-            <%= form.label :program_title, class: 'col-30' %>
+            <%= form.label :program_title, 'Programme Title', class: 'col-30' %>
             <%= form.text_field :program_title, value: "ALARABY ALYOUM", placeholder: "Programme Title", readonly: true, id: "ProgTitle", class: "col-70 form-control" %>
           </div>
           <div class="row-in">
-            <%= form.label :program_id, 'Program ID', class: 'col-30' %>
-            <%= form.text_field :program_id, placeholder: "Enter Program ID", autocomplete: 'disabled', id: "ProgID", class: "col-70 form-control" %>
+            <%= form.label :program_id, 'Programme ID', class: 'col-30' %>
+            <%= form.text_field :program_id, placeholder: "Enter Programme ID", autocomplete: 'disabled', id: "ProgID", class: "col-70 form-control" %>
           </div>
           <div class="row-in">
             <%= form.label :tx_date, 'TX Date', class: 'col-30' %>
