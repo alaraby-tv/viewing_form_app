@@ -12,6 +12,6 @@ class ViewingFormMailer < ApplicationMailer
     
     attachments.inline["logo.png"] = File.read("#{Rails.root}/app/assets/images/logo.png")
 
-    mail to: receipients, cc: @user.email, subject: "#{@form.program_title} Viewing Form"
+    mail to: receipients, cc: @user.email, subject: "Viewing Form #{@form.program_title} #{@form.program_id}"
   end
 end
