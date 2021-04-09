@@ -98,9 +98,6 @@ GEM
       responders
       warden (~> 1.2.3)
     devise-bootstrap-views (1.1.0)
-    devise_invitable (2.0.3)
-      actionmailer (>= 5.0)
-      devise (>= 4.6)
     diff-lcs (1.4.4)
     erubi (1.10.0)
     execjs (2.7.0)
@@ -290,7 +287,6 @@ DEPENDENCIES
   coffee-rails (~> 4.2)
   devise
   devise-bootstrap-views (~> 1.0)
-  devise_invitable (~> 2.0.0)
   factory_bot_rails
   jbuilder (~> 2.5)
   jquery-rails

@@ -22,7 +22,6 @@ gem 'kaminari'
 gem 'cocoon'
 
 gem 'devise'
-gem 'devise_invitable', '~> 2.0.0'
 gem 'devise-bootstrap-views', '~> 1.0'
 gem "administrate"
 
