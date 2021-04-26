@@ -44,6 +44,9 @@ end
 
 group :test do
   gem 'capybara'
+  gem 'database_cleaner'
+  gem 'rails-controller-testing'
+  gem 'shoulda-matchers', '~> 4.0', require: false
 end
 
 
