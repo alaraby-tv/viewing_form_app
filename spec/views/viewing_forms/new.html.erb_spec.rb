@@ -1,14 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe "viewing_forms/new", type: :view do
+  let(:user) { FactoryBot.create(:user) }
   before(:each) do
-    assign(:viewing_form, ViewingForm.new(
-      user: nil,
-      program_title: "MyString",
-      aspect_ratio: "MyString",
-      program_id: "MyString",
-      number_of_parts: 1
-    ))
+    @viewing_form = FactoryBot.build(:viewing_form)
+    allow(view).to receive(:current_user).and_return(user)
   end
 
   it "renders new viewing_form form" do
@@ -16,11 +12,9 @@ RSpec.describe "viewing_forms/new", type: :view do
 
     assert_select "form[action=?][method=?]", viewing_forms_path, "post" do
 
-      assert_select "input[name=?]", "viewing_form[user_id]"
-
       assert_select "input[name=?]", "viewing_form[program_title]"
 
-      assert_select "input[name=?]", "viewing_form[aspect_ratio]"
+      assert_select "select[name=?]", "viewing_form[aspect_ratio]"
 
       assert_select "input[name=?]", "viewing_form[program_id]"
 
