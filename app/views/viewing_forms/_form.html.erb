@@ -9,19 +9,19 @@
     </div>
   </div>
 </div>
-<%= form_with(model: viewing_form, local: true) do |form| %>
+<%= form_for @viewing_form do |form| %>
   <div id="ViewingForm">
     <div id="ViewingFormTitle">
       <%= image_tag "Alaraby_Alyoum_Bug.png", alt: "program_logo", id: "Prog_logo" %>
       <h5>ALARABY ALYOUM Viewing Form</h5>
     </div>
 
-    <% if viewing_form.errors.any? %>
+    <% if @viewing_form.errors.any? %>
       <div id="error_explanation" class="alert alert-danger">
-        <h2><%= pluralize(viewing_form.errors.count, "error") %> prohibited this Viewing Form from being sent:</h2>
+        <h2><%= pluralize(@viewing_form.errors.count, "error") %> prohibited this Viewing Form from being sent:</h2>
         <hr>
         <ul>
-        <% viewing_form.errors.full_messages.each do |message| %>
+        <% @viewing_form.errors.full_messages.each do |message| %>
           <li><%= message %></li>
         <% end %>
         </ul>
