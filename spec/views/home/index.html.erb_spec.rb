@@ -1,5 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe "home/index.html.erb", type: :view do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it "renders a welcome message" do
+    render
+    assert_select "h1", text: "Welcome!"
+  end
 end
