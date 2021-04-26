@@ -6,7 +6,7 @@ class ViewingFormMailer < ApplicationMailer
   #   en.viewing_form_mailer.send_form.subject
   #
   def send_form(form)
-    @user = params[:user]
+    @user = form.user
     @form = form
     receipients = ['mcringest@alaraby.tv', 'scheduling@alaraby.tv', 'playout@alaraby.tv', 'librarians@alaraby.tv']
     
