@@ -1,11 +1,14 @@
 <div id="ViewingForm">
   <div id="ViewingFormTitle">
-    <h5>Viewing Forms</h5>
+    <h5><i class="bi bi-layout-text-window"></i> Viewing Forms</h5>
   </div>
   <div class="ButonsDiv">
     <div class="row justify-content-end">
       <div class="col">
-        <%= link_to 'New Viewing Form', new_viewing_form_path, class: "btn btn-sm btn-info float-right" %>  
+        <%= link_to new_viewing_form_path, class: "btn btn-sm btn-info float-right" do %>
+          <i class="bi bi-plus"></i>
+          New Viewing Form
+        <% end %> 
       </div> 
     </div>
   </div>
@@ -32,7 +35,12 @@
           <td><%= viewing_form.tx_date.to_date %></td>
           <td><%= viewing_form.number_of_parts %></td>
           <td><%= viewing_form.created_at.to_date %></td>
-          <td><%= link_to 'View', viewing_form, class: 'badge badge-info' %></td>
+          <td>
+            <%= link_to viewing_form, class: 'badge badge-info' do %>
+              <i class="bi bi-eye-fill"></i>
+              View
+            <% end %>
+          </td>
         </tr>
       <% end %>
     </tbody>
