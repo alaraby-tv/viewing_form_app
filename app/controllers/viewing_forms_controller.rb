@@ -1,6 +1,6 @@
 class ViewingFormsController < ApplicationController
   before_action :authenticate_user!, except: :show
-  before_action :set_viewing_form, only: %i[ show edit update destroy ]
+  before_action :set_viewing_form, only: %i[ show edit update destroy resend ]
 
   # GET /viewing_forms or /viewing_forms.json
   def index
@@ -13,6 +13,11 @@ class ViewingFormsController < ApplicationController
 
   # GET /viewing_forms/1 or /viewing_forms/1.json
   def show
+  end
+
+  def resend
+    ViewingFormMailer.send_form(@viewing_form).deliver_now
+    redirect_back fallback_location: root_path, notice: "Viewing form was sent successfully."
   end
 
   # GET /viewing_forms/new
@@ -30,7 +35,7 @@ class ViewingFormsController < ApplicationController
     @viewing_form = current_user.viewing_forms.build(viewing_form_params)
     respond_to do |format|
       if @viewing_form.save
-        ViewingFormMailer.send_form(@viewing_form).deliver_now
+        #ViewingFormMailer.send_form(@viewing_form).deliver_now
         format.html { redirect_to @viewing_form, notice: "Viewing form was sent successfully." }
         format.json { render :show, status: :created, location: @viewing_form }
       else
