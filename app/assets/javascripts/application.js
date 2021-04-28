@@ -151,12 +151,11 @@ $(document).on('turbolinks:load', function() {
     }
   });
 
-  $('#PrintFormBtn').on('click', function() {
-    window.print();
-  });
-
   $('#sendForm').click(function(e) {
+
     if (!isValidInputs()) {
+      e.preventDefault();
+    } else if (isValidInputs() && !confirmSendingForm()) {
       e.preventDefault();
     }
   });
@@ -481,6 +480,11 @@ function isValidInputs() {
     return isAllValid;
   // }
 }
+
+function confirmSendingForm() {
+  return confirm("Are you sure?");
+}
+
 
 
 function timecode_set_framerate(rate) {
