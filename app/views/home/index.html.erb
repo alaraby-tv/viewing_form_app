@@ -4,10 +4,16 @@
   </div>
   <div class="row">
     <div class="col">
-      <%= link_to 'Viewing Forms', viewing_forms_path, class: 'btn btn-info btn-lg btn-block' %>
+      <%= link_to viewing_forms_path, class: 'btn btn-info btn-lg btn-block' do %>
+        <i class="bi bi-layout-text-window"></i>
+        Viewing Forms
+      <% end %>
     </div>
     <div class="col">
-      <%= link_to 'Music Cues', "#", class: 'btn btn-info btn-lg btn-block' %>
+      <%= link_to "#", class: 'btn btn-info btn-lg btn-block', data: { toggle: 'tooltip' } do %>
+        <i class="bi bi-music-note-list"></i>
+        Music Cues
+      <% end %>
     </div>
   </div>
 </div>

@@ -5,13 +5,34 @@
     <%= image_tag("logo.png", alt: "alaraby_logo", id: "atn_logo") %>
   <% end %>
   <h2 style="font-family: arial; color:white; text-align:center">Alaraby Viewing Form Application</h2>
-  <ul class="nav justify-content-end">
-    <li class="nav-item">
-      <% if current_user %>
-        <%= link_to destroy_user_session_path, method: :delete do %>
-          <i class="bi bi-box-arrow-right"></i>
-        <% end %>
+  <ul class="nav nav-fill"> 
+    <% if current_user %>
+      <% if current_user.admin? %>
+        <li class="nav-item">
+          <%= link_to admin_root_path, class: 'nav-link' do %>
+            <i class="bi bi-bar-chart-line"></i>
+            Admin Panel
+          <% end %>
+        </li>
       <% end %>
-    </li>
+      <li class="nav-item">
+        <%= link_to viewing_forms_path, class: 'nav-link' do %>
+          <i class="bi bi-layout-text-window"></i>
+          Viewing Forms
+        <% end %>
+      </li>
+      <li class="nav-item music-cue">
+        <%= link_to '#', class: 'nav-link', data: { toggle: 'tooltip', placement: "bottom" } do %>
+          <i class="bi bi-music-note-list"></i>
+          Music Cues
+        <% end %>
+      </li>
+      <li class="nav-item">
+        <%= link_to destroy_user_session_path, method: :delete, class: 'nav-link' do %>
+          <i class="bi bi-box-arrow-right"></i>
+          Logout
+        <% end %> 
+      </li>
+    <% end %>
   </ul>
 </div>
