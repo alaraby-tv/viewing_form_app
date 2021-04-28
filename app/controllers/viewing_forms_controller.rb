@@ -35,7 +35,7 @@ class ViewingFormsController < ApplicationController
     @viewing_form = current_user.viewing_forms.build(viewing_form_params)
     respond_to do |format|
       if @viewing_form.save
-        #ViewingFormMailer.send_form(@viewing_form).deliver_now
+        ViewingFormMailer.send_form(@viewing_form).deliver_now
         format.html { redirect_to @viewing_form, notice: "Viewing form was sent successfully." }
         format.json { render :show, status: :created, location: @viewing_form }
       else
