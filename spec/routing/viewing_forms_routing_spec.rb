@@ -14,6 +14,10 @@ RSpec.describe ViewingFormsController, type: :routing do
       expect(get: "/viewing_forms/1").to route_to("viewing_forms#show", id: "1")
     end
 
+    it "routes to #resend" do
+      expect(post: "/viewing_forms/1/resend").to route_to("viewing_forms#resend", id: "1")
+    end
+
     it "routes to #edit" do
       expect(get: "/viewing_forms/1/edit").to route_to("viewing_forms#edit", id: "1")
     end
