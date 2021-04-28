@@ -88,7 +88,18 @@
   <div id="BtnsDiv">
   <hr>
     <div class="row">
-      <input type="submit" name="commit" onclick="window.print();" value="Print Form"  id="PrintFormBtn" class='btn btn-block btn-lg btn-info' data-disable-with="Print Form">
+      <div class="col">
+        <%= button_tag type: 'submit', class: 'btn btn-block btn-lg btn-info', :onclick => "return window.print();" do %>
+          <i class="bi bi-printer"></i>
+          Print Form
+        <% end %>
+      </div>
+      <div class="col">
+        <%= link_to resend_viewing_form_path(@viewing_form), method: :post, data: { confirm: 'Are you sure?' }, class: 'btn btn-block btn-lg btn-info' do %>
+          <i class="bi bi-envelope"></i>
+          Resend Form
+        <% end %>
+      </div>
     </div>
   </div>
 </div>
@@ -96,6 +107,7 @@
   <div class="row justify-content-center">
     <%= link_to viewing_forms_path do %>
       <i class="bi bi-backspace"></i>
+      Back
     <% end %>
   </div>
 <% end %>
