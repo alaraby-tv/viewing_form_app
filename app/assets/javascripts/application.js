@@ -38,6 +38,7 @@ var PartsHtml = "";
 var ProgLogosList = new Array();
 ProgLogosList['Alaraby Alyoum'] = ['/images/Alaraby_Alyoum_Bug.png', 'https://drive.google.com/uc?id=1qfL8SdBC_2Bu7_8kmp55rqLYXN8btNGj&export=download'];
 ProgLogosList['Alaraby Al Ryadhi'] = ['/images/Alaraby_Alriadi_Bug.png', 'https://drive.google.com/uc?id=1QdhEyuXIFaH_3PGKLpu_yxDQRn2eyl2w&export=download'];
+ProgLogosList['Alaraby Tech'] = ['/images/Alaraby_Tech.jpeg', 'https://drive.google.com/uc?id=1ZOx-tCJwvMqvN8cayDkCTHGSSB2VlvHK&export=download'];
 ProgLogosList['Aljar Alghareeb'] = ['/images/Aljar_Alghareeb_Bug.png', 'https://drive.google.com/uc?id=1ys5BFm1GLKp0xidqAY4Teal24wAoND8Q&export=download'];
 // ProgLogosList['Alkashaf'] = ['/images/Alkashaf_L3rd_Bug.png', 'https://drive.google.com/uc?id=1oGzBI0wRfuqNIKNqGwQibXqMGIbiRdUm&export=download'];
 ProgLogosList['Almagharby'] = ['/images/Almagharby L3rd_Bug.png', 'https://drive.google.com/uc?id=1WWDQMaGtP2HqrRg3OE9WvVClcG1zAgsL&export=download'];
@@ -45,6 +46,7 @@ ProgLogosList['Almawhooboon Fel Ard'] = ['/images/Almawhooboon_Fel_Ard_L3rd_Bug.
 ProgLogosList['Alusbua Asury'] = ['/images/Alusbua Asury_L3rd_Bug.png', 'https://drive.google.com/uc?id=1S9AosRSWP0bR1COsDauSYYjmOX9kIzit&export=download'];
 // ProgLogosList['Aseer Alkotob'] = ['/images/Aseer_Alkotob_L3rd_Bug.png', 'https://drive.google.com/uc?id=1u89_bIjoYQ7QYHOWyHnYvIG-vqMRg4yn&export=download'];
 ProgLogosList['Diwan Alarab'] = ['/images/Diwan_Alarab_L3rd_Bug.png', 'https://drive.google.com/uc?id=1N-nt1VhR3ak25bRuuLfCnElJ_spUVyIi&export=download'];
+ProgLogosList['Documentaries'] = ['/images/VFLogo.png', 'https://drive.google.com/uc?id=1ZOx-tCJwvMqvN8cayDkCTHGSSB2VlvHK&export=download'];
 ProgLogosList['Fe Rewaya Okhra'] = ['/images/Wa Fi Riwaya Ukra_L3rd_Bug.png', 'https://drive.google.com/uc?id=1OydMbcoyLfXh-WILg2gUjpU_mA1UP19v&export=download'];
 // ProgLogosList['Filmi'] = ['/images/Filmi_L3rd_Bug.png', 'https://drive.google.com/uc?id=1ZWDi-PnAMcrtJ1lESY0JzYudysunxjl1&export=download'];
 ProgLogosList['Foshat Fikr'] = ['/images/Foshat_Fikr_L3rd_Bug.png', 'https://drive.google.com/uc?id=1lag_7-tR5uqoID_8-8hSUAqvLmzLVgDW&export=download'];
