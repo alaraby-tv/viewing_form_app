@@ -75,12 +75,12 @@ Rails.application.configure do
   config.action_mailer.default_options = {from: 'server@alaraby.tv'}
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    :address              => "smtp.gmail.com",
+    :address              => "smtp.office365.com",
     :port                 => 587,
     :domain               => "alaraby.tv",
-    :user_name            => ENV["GMAIL_USERNAME"],
-    :password             => ENV["GMAIL_PASSWORD"],
-    :authentication       => :plain,
+    :user_name            => ENV["SMTP_USERNAME"],
+    :password             => ENV["SMTP_PASSWORD"],
+    :authentication       => :login,
     :enable_starttls_auto => true
   }
 
